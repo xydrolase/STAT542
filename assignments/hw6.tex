@@ -229,10 +229,29 @@
     \begin{align*}
     EY & = \intzi \frac{4}{\sqrt{\pi}} y^3 e^{-y^2} dy = \left. \frac{2}{\sqrt{\pi}} y^2 e^{-y^2} \right|^0_\infty + \intzi \frac{4}{\sqrt{\pi}} y e^{-y^2} dy \\
     & = 0 + \left. \frac{2}{\sqrt{\pi}} e^{-y^2} \right|^0_\infty = \frac{2}{\sqrt{\pi}}
-    EY^2 & = 
+    EY^2 & = \frac{4}{\sqrt{\pi}} y^3 e^{-y^2} dy = \frac{2}{\sqrt{\pi}} y^3 e^{-y^2} + \intzi \frac{6}{\sqrt{\pi}} y^2 e^{-y^2}dy = 3/2\\
+    \\
+    Var(Y) &= EY^2 - (EY)^2 = \frac{3}{2} - \frac{4}{\pi}
     \end{align*}
 
-    \item
+    \item 
+    \begin{align*}
+    f_X(x) & = e^{-x}, 0 < x < \infty.\\
+    Y & = \alpha - \gamma\logX, -\infty < y < \infty, \quad g^{-1}(y) = e^{\frac{\alpha-y}{\gamma}}\\
+    f_Y(y) &= e^{-e^{\frac{\alpha-y}{\gamma}}} \frac{1}{\gamma} e^{\frac{\alpha-y}{\gamma}}\\
+    \end{align*}
+    It can be easily shown that this density integrates to 1 on $(-\infty, infty)$. Given that $e^(\cdot)$ is nonnegative, $f_Y$ is a pdf.
+    \begin{align*}
+    EY & = \intzi (\alpha - \gamma \log x) e^{-y} dy = \alpha - \gamma \intzi \log y e^{-y} dy\\
+    EY^2 & = \intzi (\alpha - \gamma \log x)^2 e^{-y} dy = \alpha^2 -\alpha \gamma \intzi \log y e^{-y} dy + \gamma^2 \intzi \log^2 y e^{-y} dy \\
+    \end{align*}
+    The integral $-\intzi \log x e^{-x} dx$ is equal to Euler-Mascheroni constant, which can be denoted $\epsilon$ for convenience. Also, $\intzi \log^2 y e^{-y} dy = \epsilon^2 + \frac{1}{6} \pi^2.
+    Therefore,
+    \begin{align*}
+    EY & = \alpha + \gamma \epsilon \\
+    EY^2 & = \alpha^2 + 2\alpha\gamma\epsilon + \gamma^2 (\epsilon^2 + \frac{1}{6} \pi^2)\\
+    Var(Y) = EY^2 - (EY)^2 = \frac{1}{6} \pi^2 \gamma^2
+    \end{align*}
     \end{enumerate}
 
     \section*{3.26}
