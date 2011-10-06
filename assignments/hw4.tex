@@ -1,0 +1,261 @@
+\documentclass[letter]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath, amssymb}
+\usepackage{enumerate}
+\usepackage{fancyhdr}
+
+\newcommand{\fx}{f_X(x)}
+\newcommand{\fxd}{f_X(x)dx}
+\newcommand{\intia}{\int_{-\infty}^a}
+\newcommand{\intii}{\int_{-\infty}^\infty}
+\newcommand{\intzi}{\int_0^\infty}
+\newcommand{\intai}{\int_a^\infty}
+\newcommand{\mgf}{M_X(t)}
+
+\pagestyle{fancy}
+\fancyhead[L]{STAT 542 HW4}
+\fancyhead[R]{Xin Yin}
+
+\begin{document}
+    \section*{2.11}
+    \begin{enumerate}[(a)]
+    \item Using the recipe to find $EX^2$,
+    \begin{align*}
+    EX^2 & = \frac{1}{\sqrt{2\pi}} \intii x^2 e^{-x^2/2} dx
+    = -\frac{1}{\sqrt{2\pi}} \intii x d e^{-x^2/2} \\
+    & = \left.-\frac{x e^{-x^2/2}}{\sqrt{2\pi}}\right|^\infty_{-\infty} + \intii \frac{e^{-x^2/2}}{\sqrt{2\pi}} dx = 1
+    \end{align*}
+
+    Now, using the pdf 
+    $f_Y(y) = \frac{1}{2\sqrt{y}}\left(f_X(\sqrt{y}) + f_X(-\sqrt{y})\right)$, and plug in $f_X(x) = (1/\sqrt{2\pi})e^{-x^2/2}$, we have,
+    \[
+    f_Y(y) = \frac{1}{\sqrt{2\pi y}}e^{-y/2}, 0 < y < \infty.
+    \]
+
+    So,
+    \begin{align*}
+    EY = \intzi \frac{y}{\sqrt{2\pi y}} e^{-y/2} dy = 
+    - \intzi \frac{2\sqrt{y}}{\sqrt{2\pi}} d e^{-y/2} \\
+    & = - \left. \frac{2\sqrt{y}}{\sqrt{2\pi}} e^{-y/2} \right|_0^\infty
+    + \intzi \frac{2}{\sqrt{2\pi}} e^{-y/2} d\sqrt{y}
+    \end{align*}
+    Let $u = \sqrt{y}, y = u^2, u \in (0, \infty)$, we get,
+    \[
+    EY = \intzi \frac{2}{\sqrt{2\pi}} e^{-u^2/2} du.
+    \]
+    Again, the integrand is even function, then,
+    \[
+    EY = \intii \frac{1}{\sqrt{2\pi}} e^{-u^2/2} du = 1.
+    \]
+
+    This gives us the same expected value as direct computation of $EX^2$.
+
+    \item Given the transform, $Y = g(X) = |X|$, we can partition the sample space $\mathcal{X}$ of $X$ to $A_0 = \{0\}, A_1 = (-\infty, 0), A_2 = (0, \infty)$, such that $g_1(x) = -x, g_2(x) = x$ are monotone on $A_1$ and $A_2$. 
+    And $g_1^{-1}(y) = -y, g_2^{-1}(y) = y$ have both continuous deriviative on $\mathcal{Y} = (0, \infty)$.
+    Therefore,
+    \[
+    f_Y(y) = f_X(-y)\left|\frac{d-y}{dy}\right| + 
+    f_X(y)\left|\frac{dy}{dy}\right| 
+    = \frac{2}{\sqrt{2\pi}} e^{-y^2/2}, \quad 0 < y < \infty.
+    \]
+    \begin{align*}
+    EY & = \intzi \frac{2y}{\sqrt{2\pi}} e^{-y^2/2} dy 
+    = \intzi \frac{2}{\sqrt{2\pi}} e^{-y^2/2} d(y^2/2) \\
+    & = -\frac{2}{\sqrt{2\pi}} \left. e^{-y^2/2} \right|_0^\infty \\
+    & = \frac{2}{\sqrt{2\pi}}.\\
+    \\
+    EY^2 &= \intzi \frac{2y^2}{\sqrt{2\pi}} e^{-y^2/2} dy 
+    = -\intzi \frac{2y}{\sqrt{2\pi}} de^{-y^2/2} \\
+    & = -\left. \frac{2y}{\sqrt{2\pi}} e^{-y^2/2} \right|_0^\infty +
+    2 \intzi \frac{1}{\sqrt{2\pi}} e^{-y^2/2} dy
+    \end{align*}
+    Because $e^{-y^2/2}$ is an even function, the above equation can be written as,
+    \[
+    EY^2 = \intii \frac{1}{\sqrt{2\pi}} e^{-y^2/2} dy = 1
+    \]
+    \[
+    Var(Y) = EY^2 - (EY)^2 = 1 - \frac{2}{\pi}
+    \]
+
+    \end{enumerate}
+    \section*{2.14}
+    \begin{enumerate}[(a)]
+    \item \begin{align*}
+    EX & = \intii x \fx dx = \int_0^\infty x \fx dx = \int_0^\infty x d F_X(x) \\
+    & = \left.xF_X(x)\right|^\infty_0 - \int_0^\infty F_X(x) dx
+    = x|_{x=\infty} - 0 - \int_0^\infty F_X(x) dx \\
+    & = \int_0^\infty 1 dx - \int_0^\infty F_X(x) dx  = \int_0^\infty \left[1-F_X(x)\right] dx.
+    \end{align*}
+    \item \[
+    \begin{array}{c l r}
+    EX & = \sum_{k=0}^\infty k f_X(k) & \\
+    & = \lim_{k \to \infty} & f_X(1) + f_X(2) + f_X(3) + \dots + f_X(k) \\
+    & & + f_X(2) + f_X(3) + \dots + f_X(k) \\
+    & & + f_X(3) + \dots + f_X(k) \\
+    & & \vdots \\
+    & & + f_X(k) \\
+    \end{array}
+    \]
+    \begin{align*}
+    & = \lim_{k \to \infty} \left[ \sum_{i=0}^k f_X(i) - \sum_{i=0}^0 f_X(i)
+    -\sum_{i=0}^1f_X(i) - ... - \sum_{i=0}^k f_X(i) \right] \\
+    & \text{Because} \sum_{i=0}^\infty f_X(i) = F_X(\infty) = 1, \\
+    EX & = \lim_{k \to \infty} \sum_{i=0}^k \left( 1 - \sum_{j=0}^i f_X(i) \right) & & & \\
+    & = \lim_{k \to \infty} \sum_{i=0}^k (1-F(i)) \\
+    & = \sum_{k=0}^\infty (1-F(k)). 
+    \end{align*}
+    \end{enumerate}
+
+    \section*{2.16}
+    \begin{align*}
+    E T & = \int_{-\infty}^\infty [1-F_T(t)]dt = \int_0^\infty P(T>t) dt \\
+    & = \int_0^\infty ae^{-\lambda t} + (1-a)e^{-\mu t}dt \\
+    & = -\frac{a}{\lambda} \int_0^\infty e^{-\lambda t} d (-\lambda t) + 
+    - \frac{1-a}{\mu} \int_0^\infty e^{-\mu t} d(-\mu t) \\
+    & = \left. \frac{a e^{-\lambda t}}{\lambda}\right|^0_\infty + 
+    \left. \frac{(1-a)e^{-\mu t}}{\mu}\right|^0_\infty = \frac{a}{\lambda} + \frac{1-a}{\mu}
+    \end{align*}
+    \section*{2.18}
+    \begin{align*}
+    E|X-a| & = \int_{-\infty}^\infty |x-a| \fxd
+    = \intia (a-x) \fxd + \intai (x-a) \fxd \\
+    & = \intia a \fxd - \intai a \fxd + \intai x \fxd - \intia x \fxd \\
+    & \text{Therefore, take the derivative of $E|X-a|$ with regard to $a$}, \\
+    & \text{and applying the Leibnitz's Rule, we have,}\\
+    \frac{d}{da}E|X-a| & = \left(a\fx |_{x=a} + \intia \frac{d}{da} a \fxd
+    \right) 
+    - \left(-a\fx|_{x=a} + \intai \frac{d}{da} a \fxd \right) \\
+    & + \left(-x\fx|_{x=a} + \intai \frac{d}{da} x \fxd \right) 
+    - \left(x\fx|_{x=a} + \intia \frac{d}{da} x \fxd \right) \\
+    & = af_X(a) + a f_X(a) - af_X(a) - af_X(a) 
+    + \intia \fxd - \intai \fxd \\
+    & = P(X \le a) + P(X \ge a) \\
+    & \text{In order to minimize the expected value with regard to $a$, set the derivative to zero,} \\
+    & P(X \le a) + P(X \ge a) = 1 - 2(X \le a) = 0 \\
+    & \Rightarrow P(X \le a) = P(X \ge a) = 1/2 
+    \end{align*}
+    Using the conclusion from exercise 2.17, we know that, if,
+    $P(X \le a) = P(X \ge a) = 1/2$, or, $\intia \fxd = \intai \fxd = 1/2$,
+    then $a = m$, where $m$ is the median of $X$.
+
+    \section*{2.32}
+    Given that $S(t) = \log \mgf$,
+
+    \begin{align*}
+    \frac{dS(t)}{dt}|_{t=0} & = \left. \frac{1}{\mgf} \frac{d}{dt} \mgf \right|_{t=0} 
+    = \left.\frac{1}{\intii e^{tx}\fx dt} \intii \frac{d}{dt} e^{tx}\fx dt\right|_{t=0} \\
+    & = \left. \frac{1}{\intii e^{tx}\fx dt} \intii x e^{tx}\fx dt\right|_{t=0} \\
+    & = \frac{1}{F(\infty)} EX = EX\\
+    \\
+    \frac{d^2S(t)}{dt^2}|_{t=0} & =
+    \left. \frac{d}{dt} \frac{1}{\intii e^{tx}\fx dt} \intii x e^{tx}\fx dt\right|_{t=0} \\
+    & = \left. -\frac{\intii x e^{tx} \fx dt}{\left(\intii e^{tx} \fx dt\right)^2} \intii x e^{tx} \fx dt + \frac{1}{\intii e^{tx}\fx dt} \intii x^2 e^{tx} \fx dt \right|_{t=0} \\
+    & = \frac{1}{1}EX^2 - \frac{1}{1^2} (EX)^2 = Var(X)
+    \end{align*}
+
+    \section*{2.33}
+    \begin{enumerate}[(a)]
+    \item \begin{align*}
+    \mgf & = \sum_{x=0}^\infty e^{tx} \frac{e^{-\lambda}\lambda^x}{x!}
+    = e^{-\lambda} \sum_x \frac{(e^t\lambda)^x}{x!} \\
+    & = e^{-\lambda} e^{\lambda e^t} \\
+    & = e^{\lambda(e^t-1)}, \lambda > 0
+    \end{align*}
+
+    Use this mgf, we can get,
+    \begin{align*}
+    EX & = \left. \frac{d}{dt} \mgf\right|_{t=0} = \left. \lambda e^{\lambda(e^t-1)}e^6t\right|_{t=0} = \lambda \\
+    E(X^2) & = \left. \frac{d^2}{dt^2} \mgf\right|_{t=0} \lambda e^t e^{\lambda(e^t-1)} +
+    \left. \lambda^2 e^{2t} e^{\lambda(e^t-1)}\right|_{t=0} = \lambda + \lambda^2 \\
+    Var(X) & = E(X^2) - (EX)^2 = \lambda
+    \end{align*}
+    \item 
+    Given $0 < p < 1$, using the formula of power series,
+    \begin{align*}
+    \mgf & = \sum_{x=0}^\infty e^{tx}p(1-p)^x = p \sum_x
+    \left((e^t(1-p)\right)^x \\
+    & = \frac{p}{1-(1-p)e^t}, 0 < p < 1.
+    \end{align*}
+
+    \begin{align*}
+    EX & = \left. \frac{d}{dt} \mgf\right|_{t=0} = \left. \frac{p^2e^t}{\left(1-(1-p)e^t\right)^2}\right|_{t=0} = 1\\
+    E(X^2) & = \left. \frac{d^2}{dt^2} \mgf\right|_{t=0} = \left. \frac{p^2e^t\left(1-(1-p)e^t\right)^2 + 2p^2e^{2t}\left(1-(1-p)e^t\right)}{\left(1-(1-p)e^t\right)^4}\right|_{t=0} \\
+    & = 3 \\
+    Var(X) & = E(X^2) - (EX)^2 = 2
+    \end{align*}
+    \item \begin{align*}
+    \mgf & = \intii \frac{1}{\sqrt{2\pi}\sigma} e^{xt} e^{-\frac{-(x-\mu)^2}{2\sigma^2)}} \\
+    & = \intii \frac{1}{\sqrt{2\pi}\sigma} \frac{e^{-\frac{x^2 - 2\mu x - 2t\sigma^2 x + \mu^2 + t^2\sigma^4 + 2t\mu\sigma^2}{2\sigma^2}}}{e^{-\mu t}e^{-t^2\sigma^2/2}} \\
+    & = e^{\mu t + t^2\sigma^2} \intii \frac{1}{\sqrt{2\pi} \sigma} e^{-\frac{\left(x-(\mu + t\sigma^2)\right)^2}{2\sigma^2}} \\
+    & \text{Because the whole integrand is a normal density centered on}~\mu+t\sigma^2, \\
+    & \text{it will integrate to 1. Therefore, }\\
+    \mgf & = e^{\mu t + \sigma^2 t^2/2}
+    \end{align*}
+    \begin{align*}
+    EX & = \left. \frac{d}{dt} \mgf\right|_{t=0} = \left. e^{\mu t + t^2\sigma^2/2}(\mu+t\sigma^2)\right|_{t=0} = \mu \\
+    E(X^2) & = \left. \frac{d^2}{dt^2} \mgf\right|_{t=0} = \left.
+    (\sigma^2 + \mu + t\sigma^2)^2 e^{\mu t + t^2\sigma^2/2}\right|_{t=0} = \sigma^2 + \mu \\
+    Var(X) & = E(X^2) - (EX)^2 = \sigma^2 
+    \end{align*}
+    \end{enumerate}
+
+    \section*{2.34}
+    We first try to find the moment generating functions for $X$ and $Y$
+    \begin{align*}
+    \mgf & = e^{t^2/2} \intii \frac{e^{-(x-t)^2/2}}{\sqrt{2\pi}} dx = e^{t^2/2} \\
+    M_Y(t) & = \sum_{y \in \{-\sqrt{3}, 0, \sqrt{3}\}} P(Y = y) e^{ty} = \frac{1}{6} (e^{\sqrt{3}t} + e^{-\sqrt{3}t}) + \frac{2}{3} \\
+    \end{align*}
+    We can show that (without detail), if $r$ is odd, $EX^r= 0$ because $EX^r$ can be written down as sum of terms with general forms,
+    $\left. \alpha t^\beta e^{t^2/2}\right|_{t=0} = 0$, where $\alpha, \beta$ are positive integer constants.
+
+    We can also show that,
+    \[ 
+    EY^(2k+1) = \left. \frac{d^{(2k+1)} M_Y(t)}{dt}\right|_{t=0} = 
+    \left.\frac{1}{6}\left(\sqrt{3}^{2k+1}e^{\sqrt{3}t}-\sqrt{3}^{2k+1}e^{\sqrt{3}t}\right) \right|_{t=0} = 0, k = 1, 2, \dots \]
+    Now we only need to show that $EX^r = EY^r, \text{for} r = 2,4$.
+    \begin{align*}
+    EX^2 & = \left. \frac{d^2 \mgf}{dt} \right|_{t=0} = e^{t^2/2} + t^2 e^{t^2/2} = 1 \\
+    EY^2 & = 1/6 * 3 + 1/6 * 3 = 1 \\
+    EX^4 & = \left. e^{t^2/2} + t^2e^{t^2/2} + 2e^{t^2/2} + 2t^2e^{t^2/2} + 3t^2e^{t^2/2} + t^4e^{t^2/2} \right|_{t=0} = 3 \\
+    EY^4 & = 1/6 * 3^2 + 1/6 * 3^2 = 3 \\
+    \end{align*}
+    So, yes, for $r=1,2,3,4,5$, $EX^r = EY^r$, but $X$ and $Y$ have different distributions.
+    
+    \section*{2.35}
+    \begin{enumerate}[(a)]
+    \item
+    \begin{align*}
+    EX_1 & = \intzi x^r \frac{1}{\sqrt{2\pi}x} e^{-\frac{(\log x)^2}{2}} dx \\
+    & = \intzi x^r \frac{1}{\sqrt{2\pi}} e^{-\frac{(\log x)^2}{2}} d \log x\\
+    \end{align*}
+    Let $u = \log x$, $u \in (-\infty, \infty)$, $x = e^u$, we have,
+    \[
+    EX_1 = \intii \frac{e^{ur}}{\sqrt{2\pi}} e^{-u^2/2} du
+    = e^{r^2/2} \intii \frac{e^{-(u-r)^2/2}}{\sqrt{2\pi}} du
+    \]
+    Because the integrand is a normal density, it will integrate to $1$ from $-\infty$ to $\infty$. Therefore,
+    \[
+    EX_1 = e^{r^2/2}, r = 0, 1, \dots
+    \]
+    \item 
+    \begin{align*}
+    g(x) & = \intzi x^r f_1(x) \sin(2\pi \log x)dx 
+    = \intzi x^r \frac{1}{\sqrt{2\pi}x} e^{-\frac{(\log x)^2}{2}} \sin(2\pi \log x) dx \\
+    & = \intzi x^r \frac{1}{\sqrt{2\pi}} e^{-\frac{(\log x)^2}{2}} \sin(2\pi \log x) d(\log x - r) \\
+    \end{align*}
+    Similarly as we did in (a), we let $u = \log x - r , x = e^{u+r}, u \in (-\infty, \infty$). And this transforms our integral to,
+    \[
+    g(u) = \intii e^{(u+r)r} \frac{1}{\sqrt{2\pi}} e^{-\frac{(u+r)^2}{2}} \sin(2\pi (u+r)) d\log u 
+    \]
+    Notice that $\sin(2 \pi(u+r)) = \sin(2\pi u + 2\pi r)$, provided $r = 0, 1, \dots$, $\sin(2 \pi(u+r)) = \sin(2\pi u)$. Hence,
+    \begin{align*}
+    g(u) & = \intii \frac{1}{\sqrt{2\pi}} e^{-\frac{(u+r)^2}{2}} 
+    e^{-\frac{-2ur-r^2}{2}} \sin(2\pi u) du \\
+    & = \frac{1}{\sqrt{2\pi}} \intii e^{-u^2/2} \sin(2\pi u) du
+    \end{align*}
+    Because $e^{-u^2/2}$ is an even function and $\sin(2\pi u)$ is an odd function, the whole integrand is an odd function, and to integrate it over $(-\infty, \infty)$ gives us $0$, \emph{i.e.},
+    \[
+    \intzi x^r f_1(x) \sin(2\pi \log x)dx = 0, \text{for all positive}~r.
+    \]
+    \end{enumerate}
+\end{document}

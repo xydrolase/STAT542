@@ -1,0 +1,173 @@
+\documentclass[letter]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath, amssymb}
+\usepackage{enumerate}
+\usepackage{fancyhdr}
+
+\pagestyle{fancy}
+\fancyhead[L]{STAT 542 HW2}
+\fancyhead[R]{Xin Yin}
+
+\begin{document}
+    % Casella & Berger 1.33, 1.35, 1.36, 1.38, 1.39, 1.45, 1.47.
+
+    \section*{1.33}
+    We know that $P(\text{color-blind}|\text{male}) = 0.05$ and $P(\text{color-blind}|\text{female}) = 0.0025$. 
+    We assume that subject is randomly picked from population such that $P(\text{male}) = P(\text{female}) = 0.5$, then we have,
+    \begin{align*}
+    P(\text{male}|\text{color-blind}) & = \frac{P(\text{color-blind}|\text{male})P(\text{male})}{P(\text{color-blind}|\text{male})P(\text{male}) + P(\text{color-blind}|\text{female})P(\text{female})} \\ 
+    & = \frac{0.05 * 0.5}{0.05*0.5 + 0.0025 * 0.5} = 0.952381
+    \end{align*}
+
+    \section*{1.35}
+    \begin{enumerate}[(i)]
+    \item Because $P(\cdot)$ is a valid probability function, $P(\cdot) \geq 0$. Given $P(B) > 0$, we have, $P(\cdot|B) = \frac{P(B|\cdot)P(\cdot)}{P(B)} \geq 0$. 
+    \item For sample space $S, P(S|B) = \frac{P(B|S)P(S)}{P(B)}$. Because $P(S) = 1, P(B|S) = P(B), P(S|B) = \frac{P(B|S)P(S)}{P(B)} = \frac{P(B)}{P(B)} = 1$.
+    \item For countable pairwise disjoint sets $A_1, A_2, \dots$, 
+    \[
+    P\left(\bigcup_{i=1}^{\infty} A_i \lvert B \right) = \frac{P\left(B \cap \bigcup_{i=1}^{\infty} A_i \right)}{P(B)} = \frac{P\left(\bigcup_{i=1}^{\infty} (B \cap A_i) \right)}{P(B)}
+    \]
+    Because $A_1 \cap B, A_2 \cap B, \dots$ are still pairwise disjoint, using the Axiom (iii), we have,
+    \[
+    \frac{P\left(\bigcup_{i=1}^{\infty} (B \cap A_i)\right)}{P(B)} = \frac{\sum_{i=1}^{\infty} P(A_i \cap B)}{P(B)} = \frac{\sum_{i=1}^{\infty} P(A_i|B)P(B)}{P(B)} = \sum_{i=1}^{\infty} P(A_i|B)
+    \]
+
+    Therefore, all three axioms for a legitimate probability function $P(\cdot)$ still hold for $P(\cdot|B)$.
+    \end{enumerate}
+
+    \section*{1.36}
+    Define $X$ to be a random variable indicating the number of target being hit, $X = 0, 1, \dots, 10$. Because each fire is an independent Bernoulli trial, we can write $P(X = k) = \binom{10}{k} p^k (1-p)^{10-k}$.
+    \begin{enumerate}[(a)]
+    \item
+    \begin{align*}
+    P(\text{target being hit at least twice}) & = P(X \geq 2) = 1 - P(X < 2) \\
+    & = 1- \left(P(X = 0) + P(X = 1)\right) = (4/5)^{10} + \binom{10}{1} (1/5) (4/5)^9 = 0.6241904 
+    \end{align*}
+    \item
+    \begin{align*}
+    P(\text{hit at least twice}|\text{hit at least once}) & = \frac{P(\text{hit at least twice and at least once})}{P(\text{hit at least once})} \\
+    & = \frac{P(\text{hit at least twice})}{P(\text{hit at least once})} = \frac{1-P(X=0)-P(X=1)}{1-P(X=0)} = 0.6992744
+    \end{align*}
+    \end{enumerate}
+    
+    \section*{1.38}
+    \begin{enumerate}[(a)]
+    \item $P(A|B) = \frac{P(A \cap B)}{P(B)}$. Because $P(B) = 1, \Omega = B, A \cap B = A \cap \Omega = A$, then,
+    \[
+        P(A|B) = \frac{P(A \cap B)}{P(B)} = \frac{P(A)}{1} = P(A)
+    \]
+    \item $P(B|A) = \frac{P(B \cap A)}{P(A)}$. Because $A \supset B, B \cap A = A$. Therefore, $P(B|A) = \frac{P(B \cap A)}{P(A)} = \frac{P(A)}{P(A)} = 1$.
+
+    Similarly, $P(A|B) = \frac{P(A \cap B)}{P(B)} = \frac{P(A)}{P(B)}$.
+
+    \item $P(A \cup B) = P(A) + P(B) - P(A \cap B)$. Because $A, B$ are mutually exclusive, we know that $A \cap B = \emptyset$ or $P(A \cap B) = 0$.
+    Additionally, we have $A \cap (A \cup B) = A$
+    Therefore, $P(A|A \cup B) = \frac{P(A \cap \left(A \cup B \right))}{P(A \cup B)} = \frac{P(A)}{P(A)+P(B)-0} = \frac{P(A)}{P(A)+P(B)}$
+
+    \item Using the definition of conditional probability, we have, 
+    $P(A \cap B \cap C) = P\left(A \cap (B \cap C)\right) = P(A|B \cap C)P(B\cap C)$. Take one step further, we could expand $P(B \cap C)$ as, $P(B \cap C) = P(B|C)P(C)$. Eventually, we have,
+    \[
+    P(A \cap B \cap C) = P(A|B \cap C)P(B|C)P(C)
+    \]
+
+    \end{enumerate}
+
+    \section*{1.39}
+    Events $A$ and $B$ are said to be \emph{mutually exclusive} if $A \cap B = \emptyset$. They are \emph{independent} if $P(A\cap B) = P(A)P(B)$.
+    Therefore,
+    \begin{enumerate}[(a)]
+        \item Given $A$ and $B$ are mutually exclusive, \emph{i.e.} $P(A \cap B) = 0$, suppose $A$ and $B$ are also independent, we have $P(A \cap B) = P(A)P(B) = 0$. However, because $P(A) > 0, P(B) > 0, P(A)P(B) > 0$. Therefore, $A$ and $B$ must not be independent if they're mutually exclusive.
+        \item Similarly, given $A$ and $B$ are independent, we have $P(A \cap B) = P(A)P(B) > 0$, because both $P(A)$ and $P(B)$ are positive. Suppose $A$ and $B$ are also mutually exclusive, $P(A \cap B) = P(\emptyset) = 0$ contradicts with the fact that $P(A \cap B) > 0$. Therefore, $A$ and $B$ can't be mutually exclusive when they are independent.j
+    \end{enumerate}
+    \section*{1.45}
+    Given a sample space $S= {s_1, \dots, s_n}$ and the range of r.v. $X$,
+    $\chi = \{x_1, \dots, x_m\}$,
+    the induced probability function $P_X$ defined on sample space $\chi$ is,
+    \[
+    P_X(X = x_i) = P({s_j \in S: X(s_j)=x_i}).
+    \]
+    Now let $p_1, \dots, p_n$ be nonnegative numbers that sum up to 1. 
+    Therefore, 
+    \[
+    \forall i, P_X(X=x_i) = P(\{s_j \in S: X(s_j) = x_i\}) = \sum_{\{j:
+    X(s_j) = x_i\}} p_j \geq 0
+    \]
+    \[
+    P_X(\chi) = P(X^{-1}(\chi)) = P(\{s_j \in S: X(s_j) \in Chi\}) = P(S) = 1
+    \]
+    And, because $X$ is mapping from sample space $S$ to $\chi$, there must be
+    only one image $x_i \in \chi$ of any element $s_j \in S$. Thus, let 
+    $B_1, \dots, B_k$ be pairwise disjoint events defined on $\chi$, 
+    $X^{-1}(B_1), \dots, X^{-1}(B_k)$ must be pairwise disjoint events on $S$
+    as well. 
+    \begin{align*}
+    P(\bigcup_{i=1}^k B_i) & = \sum_{\{j:x_j \in \bigcup_{i=1}^k B_i\}} P(X=x_j)
+    \\
+    & = \sum_{i=1}^k \sum_{\{j:x_j \in B_i \}} P_X(X=x_j) \\
+    & = \sum_{i=1}^k \sum_{\{j:x_j \in B_i \}} \sum_{\{l: X(s_l)
+    = x_j\}} p_l \\
+    & = \sum_{i=1}^k P(X^{-1}(B_k)) = \sum_{i=1}^k P_X(B_k)
+    \end{align*}
+    
+    Hence, all three axioms on a legitimate probability function also hold for
+    the induced probability function $P_X$ on $\chi$.
+    \section*{1.47}
+    \begin{enumerate}[(a)]
+        \item Because $\lim_{x \to -\infty} \tan^{-1}(x) = -\pi /2$, and $\lim_{x \to \infty} \tan^{-1}(x) = \pi/2$,
+        \begin{multline*}
+            \lim_{x \to -\infty} \frac{1}{2} + \frac{1}{\pi} \tan^{-1}(x) = 0\\
+            \lim_{x \to \infty} \frac{1}{2} + \frac{1}{\pi} \tan^{-1}(x) = 1\\
+        \end{multline*}
+        Also,
+        \[
+        d \frac{(\frac{1}{2}+\frac{1}{\pi} \tan^{-1}(x))}{dx} = \frac{1}{\pi(1+x^2)} > 0,
+        \]
+        which suggests that the function is monotonic non-decreasing. 
+        And because the function is absolute continuous on $\cal R$, it is a cdf.
+        \item 
+        \begin{align*}
+        & \lim_{x \to -\infty} (1+e^{-x})^{-1} = \frac{1}{\infty} = 0 \\
+        & \lim_{x \to \infty} (1+e^{-x})^{-1} = \frac{1}{1+0} = 1 \\
+        & d \frac{(1+e^{-x})^{-1}}{dx} = \frac{1}{(1+e^{-x})^2} > 0
+        \end{align*}
+        In addition, the function is absolute continuous on $\cal R$. Hence, it is a cdf.
+
+        \item 
+        \begin{align*}
+        & \lim_{x \to -\infty} e^{-e^{-x}} = e^{-\infty} = 0 \\
+        & \lim_{x \to \infty} e^{-e^{-x}} = e^0 = 1 \\
+        & d \frac{e^{-e^{-x}}}{dx} = e^{-e^{-x}} > 0
+        \end{align*}
+        Again, this is an absolute continuous functino on $\cal R$. It is then a cdf.
+
+        \item 
+        \begin{align*}
+        & \lim_{x \to 0} 1-e^{-x} = 1-e^0 = 0 \\
+        & \lim_{x \to \infty} 1- e^{-x} = 1 - 0 = 1 \\
+        & d \frac{1-e^{-x}}{dx} = e^{-x} > 0
+        \end{align*}
+        The function is continuous on $(0, \infty)$. It is then a cdf on $(0, \infty)$.
+
+        \item
+        For function
+        \[
+        F_Y(y) = \begin{cases}
+        \frac{1-\epsilon}{1+e^{-y}} & \text{if}~y < 0 \\
+        \epsilon + \frac{1-\epsilon}{1+e^{-y}} & \text{if}~y \geq 0, \\
+        \end{cases}
+        \]
+        we can have that,
+        \begin{align*}
+        & \lim_{y \to -\infty} F_Y(y) = \frac{1-\epsilon}{\infty} = 0 \\
+        & \lim_{y \to \infty} F_Y(y) = \epsilon + \frac{1-\epsilon}{1+0} = 1 \\
+        & F_Y'(y) = \frac{1-\epsilon}{(1+e^{-y})^2)} >0,  y \in (-\infty, 0) \cup (0, \infty) 
+        \end{align*}
+        The function is continuous on $(-\infty, \infty)$ but $y=0$. However,
+        \[
+        \lim_{y \downarrow 0} F_Y(y) = \lim_{y \downarrow 0} \epsilon + \frac{(1-\epsilon)}{1+e^{-y}} = F_Y(0) = \frac{1+\epsilon}{2} 
+        \]
+        So it is right continuous at $0$. Therefore, it is a cdf.
+
+    \end{enumerate}
+
+\end{document}

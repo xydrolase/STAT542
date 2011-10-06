@@ -1,0 +1,179 @@
+\documentclass[letter]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath, amssymb}
+\usepackage{enumerate}
+\usepackage{fancyhdr}
+
+\pagestyle{fancy}
+\fancyhead[L]{STAT 542 HW1}
+\fancyhead[R]{Xin Yin}
+
+\begin{document}
+    % Statistical Inference 1.6, 1.7, 1.12, 1.13, 1.18, 1.24, 1.25
+
+    \section*{1.6}
+    Define event $U$ = {first penny is head}, $W$ = {second penny is head}. 
+    Because outcomes from two coins are independent, we have,
+    \begin{align*}
+    p_0 & = P(\text{0 heads occur}) = P(U^c \cap W^c) = P(U^c)P(W^c) = (1-u)(1-w) \\
+    p_1 & = P(\text{1 head occurs}) = P((U \cap W^c) \cup (U^c \cap W)) = u(1-w) + w(1-u) \\
+    p_2 & = P(\text{2 heads occur}) = P(U \cap W) = P(U)P(W) = uw
+    \end{align*}
+
+    If $p_0 = p_1 = p_2$, we can have, $uw = 1/3, u + w = 1$, or,
+    \[ u(1-u) = \frac{1}{3} \Rightarrow u^2 - u + \frac{1}{3} = 0 \]
+    For this quadratic equation, $\Delta < 0$. Therefore, no real $u$ and $w$ can be chosen such that $p_0 = p_1 = p_2$.
+
+    \section*{1.7}
+    \begin{enumerate}[(a)]
+        \item Based on the fact that the probability of hitting a region is
+        proportional to area, we can define probability function
+        $P(\text{scoring $i$ points}), i=0,\dots,5$ as,
+
+        \[
+        P(\text{scoring}~i~\text{points}) = \frac{\text{Area of
+        region}~i}{\text{Area of wall}} = 
+        \begin{cases}
+        \frac{\pi ((6-i)r/5)^2 - \pi((5-i)r/5)^2}{A} = \frac{\pi r^2
+        \left((6-i)^2 - (5-i)^2\right)}{25A} &,  i = 1, \dots, 5\\
+        \frac{A-\pi r^2}{A} &, i = 0
+        \end{cases}
+        \]
+        \item The conditional probability 
+        $P(\text{scoring $i$ points}|\text{board is hit})$, using the
+        definition of conditional probability is,
+        \[
+        P(\text{scoring $i$ points}|\text{board is hit}) = \frac{
+        P(\text{scoring $i$ points} \cap \text{board is hit})}{
+        P(\text{board is hit})
+        }.
+        \]
+
+        Note that event \emph{board is hit} implies player scores at least $1$
+        point, \emph{i.e.} $i > 1$. 
+        Thus $P(\text{scoring $i$ points} \cap \text{board is hit})$ is the
+        probability defined in (a) under condition of $i=1, \dots 5$, which is,
+        \[
+        P(\text{scoring $i$ points} \cap \text{board is hit}) = \frac{\pi r^2
+        \left((6-i)^2 - (5-i)^2\right)}{5^2A}.
+        \]
+        And $P(\text{board is hit}$) is nothing but, 
+        \[
+        P(\text{board is hit}) = \frac{\pi r^2}{A}.
+        \]
+
+        Therefore, we have,
+        \[
+        P(\text{scoring $i$ points}|\text{board is hit}) = \frac{(6-i)^2 -
+        (5-i)^2}{5^2},
+        \]
+        which is exactly the probability in Example 1.2.7.
+
+    \end{enumerate}
+
+    \section*{1.12}
+    \begin{enumerate}[(a)]
+    \item Let $A \in \mathcal{B}, B \in \mathcal{B}$ be two disjoint sets, using Axiom of Countable
+    Additivity, we have,
+    \[
+    P(A \cup B \cup \emptyset \cup \emptyset \cup \dots) = P(A) + P(B) + P(\emptyset) + \dots = P(A \cup B) = P(A) + P(B)
+    \]
+    \item Let $A_1, A_2, \dots$ be pairwise disjoint sets, $A = \bigcup_{i=1}^{\infty} A_i$. And let 
+    \[
+    B_1 = A_1, B_2 = A_1 \cup A_2, \dots, B_n = A_1 \cup \dots \cup A_n, \dots
+    \], we have that,
+    \[
+    B_1 \subset B_2 \subset \dots \subset B_n \subset \dots \uparrow A
+    \]
+    which implies,
+    \[
+    A \backslash B_1 \supset A \backslash B_2 \supset \dots \supset A
+    \backslash B_n \supset \dots \downarrow \emptyset
+    \]
+
+    Using Axiom of Finite Additivity, we have, for two disjoint sets $B_n$ and
+    $A \backslash B_n$ in $A$,
+    \[
+    P(A) = P\left(B_n \cup A \backslash B_n\right) = P(B_n) + P(A \backslash
+    B_n) = P(\bigcup_{i=1}^n A_i) + P(A \backslash B_n)
+    \]
+
+    As $n \to \infty$, we have,
+    \[
+    P(A) = \lim_{n \to \infty} P(\bigcup_{i=1}^n A_i) + \lim_{n \to \infty} P(A
+    \backslash B_n)
+    \]
+
+    Using Axiom of Continuity, we know that $\lim_{n \to \infty} P(A \backslash B_n) = 0$, therefore,
+    \[
+    P(A) = P(\bigcup_{i=1}^{\infty} A_i) = \lim_{n \to \infty} P(\bigcup_{i=1}^n A_i) = \lim_{n \to \infty} \sum_{i=1}^n P(A_i) 
+    = \sum_{i=1}^{\infty} P(A_i)
+    \]
+
+    \end{enumerate}
+    \section*{1.13}
+    If $P(A) = 1/3, P(B^c) = 1/4$, we know that $P(B) = 1 - P(B^c) = 3/4$. 
+    Suppose $A$ and $B$ are disjoint, we know that, $\{A, B, (A^c \cap B^c)\}$ is a partition of $S$.
+    Then, we have $P\left(A \cup B \cup (A^c \cap B^c) \right) = P(A) + P(B) + P(A^c \cap B^c) = 1$.
+
+    However, $P(A) + P(B) = \frac{1}{3} + \frac{3}{4} = \frac{13}{12} > 1, P(A^c \cap B^c) \geq 0$. 
+    Therefore, $A$ and $B$ can't be disjoint.
+
+    \section*{1.18}
+    To place $n$ balls into $n$ cells, if there's exactly only one cell is empty, it suggests that $n-2$ cells have
+    exactly one ball and only $1$ cell has two balls. 
+    
+    \begin{enumerate}[(a)]
+    \item If the balls are disinct, \emph{i.e.} this is an ordered experiment, the sample space $\Omega$ 
+    will consist of $n^n$ outcomes of different placement. Among the $n^n$ outcomes, we now have to 
+    discuss how many of them satisfy the requirement of only one empty cell.
+
+    We have $n!$ ways to place $n$ balls into $n$ cells such that each cell has exactly one ball.
+    Next, we randomly pick $1$ out of $n$ cell, grab the ball from the cell and put it into another cell,
+    which can be chosen from the remaining $n-1$ cells. The order of two balls does not matter, so 
+    in total we have $\frac{n (n-1)}{2}$ ways to do this.
+    Overall, we have $\frac{n(n-1) n!}{2} = \binom{n}{2} n!$ ways to have exactly one empty cell.
+
+    The probability is therefore, $\frac{\binom{n}{2} n!}{n^n}$.
+
+    \item If the balls are indistinguishable, the sample space $\Omega$ will only contain 
+    $\binom{n+n-1}{n}$ outcomes of different placement. 
+    
+    Since all balls are the same, we have exactly $1$ way to place one ball in each cell. 
+    Now we need to randomly choose two cells, grab ball from cell A and put it in B. We have $n$ ways
+    to choose A and $n-1$ ways to choose B. In total, $n(n-1)$ ways to have exactly one empty cell.
+
+    The probability under unordered scenario is, $\frac{n(n-1)}{\binom{n+1-1}{n}}$.
+
+    \end{enumerate}
+
+    \section*{1.24}
+    Define a series of events $E_i$, where $E_i$ = {head first appears on $i$-th toss. For a generic probability $P(\text{head})=p$ having a head in each toss, we have, $P(E_i) = (1-p)^{i-1} \times p, \text{for} i = 1,2,\dots$.
+    
+    Because two players toss coin alternately, define event $A$ = {A wins the game}, which can be written as, $A = E_1 \cup E_3 \cup E_5 \cup \dots = \bigcup_{j=1}^{\infty} E_{2j-1}$.
+    \begin{enumerate}[(a)]
+        \item A fair coin implies $p = 0.5$. Then we have,
+        \[ 
+        P(A) = P(\bigcup_{j=1}^{\infty} E_{2j-1}) = \sum_{j=1}^{\infty} P(E_{2j-1}) = 1/2 + 1/8 + 1/32 + ... = 2/3 \approx 0.667 
+        \]
+        \item For a more generic $p$, we have,
+       
+        \begin{align*}
+        P(A) & = P(\bigcup_{j=1}^{\infty} E_{2j-1}) = \sum_{j=1}^{\infty} P(E_{2j-1})\\
+        & = p + (1-p)^2 p + (1-p)^4 p + \dots = p\left(1 + (1-p)^2 + (1-p)^4 + \dots\right) \\
+        & = p \sum_{n=0}^{\infty} (1-p)^{2n} = p \left(\sum_{n=1}^{\infty} (1-p)^n - \sum_{n=1}^{\infty} (1-p)^{2n-1}\right)\\
+        & = p \left(\sum_{n=1}^{\infty} (1-p)^n - (1-p) \sum_{n=0}^{\infty} (1-p)^{2n} \right) \\
+        & = p \left(\frac{1}{1-(1-p)} - \frac{1-p}{1-(1-p)^2}\right) = \frac{1}{2-p}
+        \end{align*}
+        
+        \item From (b), we already know that, $P(A) = \frac{1}{2-p}$. 
+        For all $0 < p < 1, \frac{1}{2-p} > \frac{1}{2-0} = \frac{1}{2}$. Therefore, $P(\text{A wins}) > \frac{1}{2}$.
+    \end{enumerate}
+    
+    \section*{1.25}
+    For the children for the Smiths, the sample space of their sex $\Omega$ is $\{GG, GB, BG, BB\}$.
+    If we condition on the knowledge that at least of these two children is a boy, our sample space
+    is reduced to $\{GB, BG, BB\}$.
+
+    Therefore, $P(\text{both children are boys}|\text{at least one is boy}) = \frac{1}{3}$.
+\end{document}

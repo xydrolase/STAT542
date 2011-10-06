@@ -1,0 +1,191 @@
+\documentclass[letter]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath, amssymb}
+\usepackage{enumerate}
+\usepackage{fancyhdr}
+
+\pagestyle{fancy}
+\fancyhead[L]{STAT 542 HW5}
+\fancyhead[R]{Xin Yin}
+
+\begin{document}
+    \section*{2.36}
+    Given 
+    $M_X(t) = \int_0^\infty \frac{e^{tx}}{\sqrt{2\pi}x} e^{-(\log x)^2/2} dx$, we first recognize that, 
+    \[
+    \lim_{x \to \infty} e^{tx}e^{-(\log x)^2/2} = \infty
+    \]
+    because using L'H$\hat o$pital's rule,
+    \[
+    \lim_{x \to \infty} \frac{tx - \log^2x/2}{tx} = \lim_{x \to \infty} \frac{t-\frac{\log x}{x}}{t} = 1,
+    \]
+    \emph{i.e.} $tx - \frac{\log^2 x}{2}$ grows as fast as $tx$, and $\lim_{x \to \infty} tx = \infty$. 
+
+    Given $0 \le x < \infty$, $e^{tx}e^{-(\log x)^2/2} > 1$. So,
+    \[
+    \int_0^\infty \frac{e^{tx}}{\sqrt{2\pi}x} e^{-(\log x)^2/2} dx \ge
+    \int_0^\infty \frac{1}{\sqrt{2\pi}x} dx = \frac{1}{\sqrt{2 \pi}} \log x|^\infty_0 = \infty
+    \]
+    
+    Therefore, the $M_X(t)$ doesn't converge, \emph{i.e.} the mgf for $X$ doesn't exist.
+    \section*{2.38}
+    \begin{enumerate}[(a)]
+    \item
+    The mgf for r.v. $X$ is, 
+    \begin{align*}
+    M_X(t) &= \sum_{x=0}^\infty e^{xt} = \left(r+x-1 \choose x\right) p^r (1-p)^x 
+    = p^r \sum_{x=0} \frac{(r+x-1)!}{(r-1)!x!} \left(e^t(1-p)\right)^x \\
+    & = p^r \sum_{x=0} (-1)^x \frac{-r(-r-1)\cdots(-r-x+1)}{x!} \left(e^t(1-p)\right)^x \\
+    & = p^r \sum_{x=0} \left(-x \choose r\right) \left(e^t(p-1)\right)^x \\
+    & = p^r\left(1+e^t(p-1)\right)^{-r} \\
+    \end{align*}
+    \item Given $Y=2pX$, using the Theorem, 2.3.15,
+    \[
+    M_Y(t) = M_X(2pt) = \left(\frac{p}{1+e^{2pt}(p-1)}\right)^r
+    \]
+    So,
+    \begin{align*}
+    \lim_{p \to 0} M_Y(t) & = \lim_{p \to 0} \left(\frac{p}{1+e^{2pt}(p-1)}\right)^r \\
+    & = \left(\lim_{p \to 0} \frac{p}{1+e^{2pt}(p-1)}\right)^r \\
+    & \text{Using L'Hopital's rule, taking the derivative with regard to p on both numerator and denominator,}\\
+    & = \left(\lim_{p \to 0} \frac{1}{e^{2pt} + 2pte^{2pt} - 2t e^{2pt}}\right)^r = \left(\frac{1}{1-2t} \right)^r
+    \end{align*}
+    \end{enumerate}
+
+    \section*{3.1}
+    Since $X$ is the random variable with discrete uniform distribution on $(N_0, N_1)$, 
+    \[
+    P_X(x) = \frac{1}{N_1-N_0+1}, x = N_0, N_0 + 1, \dots, N_1.
+    \]
+    We first start with $EX$, which is,
+    \[
+    EX = \sum_{x=N_0}^{N_1} \frac{x}{N_1 - N_0 + 1} = \frac{1}{N_1 - N_0 + 1} \sum_{x=N_0}^{N_1} = \frac{N_0 + N_1}{2}
+    \]
+    For $EX^2$, 
+    \[
+    EX^2 \sum_{x=N_0}^{N_1} \frac{x^2}{N_1 - N_0 + 1} = \frac{1}{N_1-N_0+1} \left(\sum_{x=1}^{N_1} x^2 - \sum_{x=1}^{N_0-1} x^2 \right)
+    \]
+    Let $a = N_1, b = N_0 - 1$, using the identity 
+    $ \sum_{i=1}^{N} i^2 = \frac{N(N+1)(2N+1)}{6}$,
+    we have,
+    \begin{align*}
+    EX^2 & = \frac{1}{a-b} \left(\frac{a(a+1)(2a+1)}{6} - \frac{b(b+1)(2b+1)}{6}\right) = \frac{2a^3 - 2b^3 + 3a^2 - 3b^2 + a-b}{6(a-b)} \\
+    & = \frac{2(a-b)(a^2 + ab + b^2) + 3(a-b)(a+b) + (a-b)}{6(a-b)} 
+    = \frac{2(a^2 + ab+ b^2) + 3(a+b) + 1}{6}
+    \end{align*}
+
+    Then,
+    \begin{align*}
+    Var(X) & = EX^2 - (EX)^2 = \frac{4(a^2+ab+b^2) + 6(a+b) +2}{12} - \frac{3(a+b+1)^2}{12}\\
+    & = \frac{(a-b)^2 -1}{12} = \frac{(N_1-N_0-1)^2-1}{12} \\
+    & =\frac{(a-b+1)(a-b-1)}{12} = \frac{(N_1-N_0)(N_1-N_0+2)}{12}
+    \end{align*}
+
+    \section*{3.2}
+    Given a received lot, define $N=100$ as number of parts, $M$ as the number of defective parts, $K$ as the number of parts being randomly sampled, and random variable $X$ as the number of defective parts among $K$ sampled ones.
+    We know that $X$ follows a hypergeometric distribution with parameters $M, N, K$, \emph{i.e.}
+    \[
+    P(X = x) = \frac{\binom{M}{x} \binom{N-M}{K-x}}{\binom{N}{K}}
+    \]
+    \begin{enumerate}[(a)]
+    \item The probability we are interested in is $P(X=0|M>5)$, which is,
+    \[
+    P(X=0|M>5) = \frac{\binom{M}{0} \binom{N-M}{K}}{\binom{N}{K}} 
+    = \frac{\binom{N-M}{K}}{\binom{N}{K}}, \quad M>5.
+    \]
+
+    Expand the above expression using $N=100$, we get,
+    \[
+    P(X=0|M>5) = \frac{(100-M)((100-1)-M)\cdots((100-K+1)-M)}{(100)(100-1)\cdots(100-K+1)}.
+    \]
+    Both the numerator and denomiator has $k$ terms, and simplify the above expression we get,
+    \[
+    P(X=0|M>5) = (1-\frac{M}{100})(1-\frac{M}{99})\cdots(1-\frac{M}{100-K+1})
+    \]
+
+    Obviously, if we fix $K$, as $M$ increases, the probability $P(X=0|M>5)$ decreases. If we seeks to gurantee that $P(X=0|M>5) \le 0.1$, we need to find $K$ such that $\max_{M} P(X=0|M>5) \le 0.1$, \emph{i.e.} $M=6$.
+    Plug in $M=6$ into the expression, 
+    \[
+    P(X=0|M=6) = \prod_{i=0}^{K-1} \left(1-\frac{6}{100-i}\right),
+    \]
+    which is a decreasing function. Finding the $K$ such that $P(X=0|M=6) \le 0.1$ is equivalent to find the $K$ such that $K$ is equal or larger than the root of equation $P(X=0|M=6) - 0.1 = 0$.
+    
+    Solving this gives us $P(X=0|M=6,K=31)=0.1005639, P(X=0|M=6,K=32)=0.091819$. So, $K=32$ is the smallest $K$ that ensures probability of accepting unacceptable lot is less than 0.1.
+
+    \item Now, $P(\text{accept an unacceptable lot}) = P(X=0,1|M>5)$, which is,
+    \[
+    P(X=0,1|M>5) = P(X=0|M>5) + P(X=1|M>5) 
+    = \frac{\binom{M}{0}\binom{N-M}{K}}{\binom{N}{K}} + \frac{\binom{M}{1}\binom{N-M}{K-1}}{\binom{N}{K}}
+    \]
+    Expand all the binomial coefficients, we get,
+    \begin{align*}
+    P(X=0,1|M>5) & =  \left(\prod_{i=0}^{K-2} \left(1-\frac{M}{100-i}\right)\right) \left(1 - \frac{M}{N-K+1} + \frac{MK}{N-K-1}\right)\\
+    & = \left(\prod_{i=0}^{K-2} \left(1-\frac{M}{100-i}\right)\right) \left(1+\frac{M(K-1)}{N-K+1}\right)
+    \end{align*}
+    Note that if $K$ is fixed, as $M$ grows larger, the last term is increasing as well. But because the product decays faster than the last term, $P(X=0,1|M>5)$ decreases as $M$ increases when fixing $K$.
+
+    So, we choose $M=6$, and we can find $P(X \le 1|M=6, K=50) = 0.1022008$, and $P(X \le 1|M=6,K=51) = 0.09331377$. So, $K=51$ is the minimal $K$ to ensure $P(X \le 1|M=6, K) \le 0.1$.
+    \end{enumerate}
+
+    \section*{3.3}
+    The pedestrain can only cross the street if the $5th--7th$ seconds are clear of cars passing. This gives us $(1-p)^3$. Now we focus on the first 4 seconds. Obviously, there must be a car passing at the 4th second, otherwise the pedestrain doesn't necessarily need to wait exactly 4 second.
+    For the first three seconds, if there are no cars completely, pedestrain can cross without waiting for a single second. So there should be at least one car passing in the first three seconds. The probability is $1-(1-p)^3$.
+
+    Therefore, multiplying the probability for each Bernoulli trial, we can have,
+    \[
+    P(\text{wait exactly 4 seconds}) = \underbrace{(1-(1-p)^3)}_{\begin{array}{c}\text{\small at least one car} \\ \text{\small in first 3 sec}\end{array}}\cdot \underbrace{p(1-p)^3}_{\begin{array}{c}\text{\small car passing at 4th sec}\\ \text{\small and no cars afterwards}\end{array}}
+    \]
+
+    \section*{3.6}
+    \begin{enumerate}[(a)]
+    \item Given the efficiency of insecticide to be 99\%, it implies that 1\% of insects will survive applied with this insecticide. Define $p = 0.01$ as the probability of survival for individual insect, and assume that the effect of insecticide is independent for individuals. 
+    
+    If $X$ is the random variable of number of surviving insects, we can model $X$ using a binomial distribution with parameters $n = 2000, p =0.01$, \emph{i.e.}
+    \[
+    P(X=k) = \binom{n}{k} p^k(1-p)^{n-k}
+    \]
+    \item $P(X < 100) = \sum_{k=0}^{99} \binom{n}{k} p^k(1-p)^{n-k}$
+    \item If $x_0$ is the value of $X$ such that the pmf of binomial is maximized, we can show that,
+    \[
+    \frac{\text{Bin}_{n,p}(x_0)}{\text{Bin}_{n,p}(x_0+1)} = \frac{p(n-x+1)}{x(1-p)} \ge 1 \Rightarrow x \le np+1 
+    \]
+    \[
+    \frac{\text{Bin}_{n,p}(x_0)}{\text{Bin}_{n,p}(x_0-1)} = \frac{(1-p)(x+1)}{p(n-x-1)} \ge 1 \Rightarrow x \ge np-1 
+    \]
+    So, the pmf is maximized when $X \in [np-1, np+1]$, for $X > np+1$, the pmf is decreasing.
+    We can check that $Bin_{2000, 0.01}(100) \approx Poi_{\lambda=20}(100) = 2.799666 \times 10^{-37} $, and because $100 > 20 + 1$, using the conclusion above, we have,
+    \begin{align*}
+    P(X < 100) & = 1 - P(X >= 100) = 1 - \sum_{x=100}^{2000} \text{Bin}_{2000,0.01}(x) \ge 1 - \sum_{100}^{2000} \text{Bin}_{2000,0.01}(100) \\
+    & \text{Using Poisson with $\lambda=np=20$ to approximately calculate}~\text{Bin}_{2000,0.01}(100),\\
+    & \approx 1 - 5.319366 \times 10^{-34}
+    \end{align*}
+
+    So, the probability should be greater than $1 - 5.319366 \times 10^{-34}$, approximately, we can say the probability is $1$.
+    \end{enumerate}
+    \section*{3.10}
+    \begin{enumerate}[(a)]
+    \item The probability of the defendant being innocent is, 
+    $P(\text{selecting 4 cocaine packets, 2 noncocaine packets})$, which is, given $N$ cocaine packets and $M$ noncocaine packets,
+    \begin{align*}
+    P(\text{4 cocaine, 2 noncocaine}) &= P(\text{4 cocaine})P(\text{2 noncocaine}|\text{4 cocaine}) \\
+    &= \frac{\binom{N}{4}\binom{M}{0}}{\binom{N+M}{4}} \cdot 
+    \frac{\binom{N-4}{0}\binom{M}{2}}{\binom{N+M-4}{2}} \\
+    &= \frac{\binom{N}{4}\binom{M}{2}}{\binom{N+M}{4}\binom{N+M-4}{2}}\quad,
+    \end{align*}
+    given that two random sampling processes follow the hypergeometric distribution.
+    \item Suppose when $M=M_0$, the probability is maximized, then we know that $P(\cdot|M=M_0)/P(\cdot|M=M_0-1) \ge 1, P(\cdot|M=M_0)/P(\cdot|M=M_0+1) \ge 1$.
+    Also, because the denominator of the probability
+    $\frac{\binom{N}{4}\binom{M}{2}}{\binom{N+M}{4}\binom{N+M-4}{2}}$ is a constant, to maximize the probability is equivalent to maximize the numerator. So,
+    \begin{align*}
+    \frac{\binom{496-M_0}{4}\binom{M_0}{2}}{\binom{495-M_0}{4}\binom{M_0+1}{2}} &= \frac{(496-M_0)(495-M_0)(494-M_0)(493-M_0)(M_0)(M_0-1)/(4!2!)}
+    {(495-M_0)(494-M_0)(493-M_0)(492-M_0)(M_0+1)(M_0)/(4!2!)}\\
+    &= \frac{(496-M_0)(M_0-1)}{(492-M_0)(M_0+1)} \ge 1
+    \end{align*}
+    Solving this inequality, gives us $M \ge 164.667$.
+
+    Similarly, we can get $M \le 165.667$. Give that $M$ should be an integer, it is obvious that $M=165, N=496-165 = 331$ maximizes the probability, which is 
+    \[
+    \frac{\binom{165}{2}\binom{331}{4}}{\binom{496}{4}\binom{492}{2}} = 0.02208168 \approx 0.022 
+    \]
+    \end{enumerate}
+\end{document}
