@@ -2,6 +2,7 @@
 \usepackage[margin=1in]{geometry}
 \usepackage{amsmath, amssymb}
 \usepackage{enumerate}
+\usepackage{graphicx}
 \usepackage{fancyhdr}
 
 \pagestyle{fancy}
@@ -30,7 +31,14 @@
     \lim_{N \to \infty, M \to \infty, M/N \to p} P(X=x|N,M,K) = \binom{K}{x} \left(\frac{M}{N}\right)^x \left(\frac{N-M}{N}\right)^{K-x} = \binom{K}{x} p^x (1-p)^{K-x}
     \]
 
-    \item 
+    \item Since Poisson$(\lambda)$ can be used as approxmiation of binomial$(n, p)$, as $n \to \infty, p \to 1$, where $\lambda = np$. Using the results from (a), as $N\to\infty, M\to\infty, M/N\to p$, 
+    the hypergeometric can be approxmiated by binomial$(K, M/N)$.
+
+    Now, given that $K\to\infty, N/M\to 0, KM/N\to\lambda$, it satisfies the condition for Poisson approximation, and $\lambda = KM/N$. Therefore, 
+    \[
+    P(X=x|N,M,K) \to \frac{e^{-\lambda}\lambda^x}{x!}, x = 0, 1, \dots
+    \]
+    as $N\to\infty, M\to\infty, M/N\to 0, KM/N\to\lambda$.
     \item
     \begin{flalign*}
     & P(X=x|N,M,K) = \frac{\binom{M}{x} \binom{N-M}{K-x}}{\binom{N}{k}} =
@@ -325,6 +333,34 @@
     P\left((X-\mu_X)^2 \ge k^2 \sigma_X^2\right) \le \frac{E(X-\mu_X)^2}{k^2 \sigma_X^2} = \frac{1}{k^2}
     \]
     given the numerator is the definition of variance, and $E(X - \mu_X)^2 = \sigma_X^2$.
+
+    For $X \sim \text{uniform}(0, 1), \mu_X = 0.5, \sigma_X = \sqrt{\frac{1}{12}}$, 
+    \[
+    P(|X-\mu_X| \ge k\sigma_X) = 1 - P(|X - \mu_X| \le k\sigma_X) = 1 - P(\frac{1}{2}-\frac{k}{\sqrt{12}} \le X \le \frac{1}{2} + \frac{k}{\sqrt{12}}.
+    \]
+    If $k \ge \sqrt{3}$, $\frac{k}{\sqrt{12}} \ge \frac{1}{2}$, and above probability will be 0, so,
+    \[
+    P(|X-\mu_X| \ge k\sigma_X) = 1-\frac{2k}{\sqrt{12}} I(k < \sqrt{3}).
+    \]
+
+    Similarly, if $X \sim exp(\lambda), \quad \mu_X = \lambda, \sigma_X = \lambda$, 
+    \[
+    P(|X-\mu_X| \ge k\sigma_X) = 1 - P(|X - \mu_X| \le k\sigma_X) = 1-P((1-k)\lambda \le X \le (1+k)\lambda)
+    \]
+    which is,
+    \[
+    1- \int_{(1-k)\lambda}^{(1+k)\lambda} \frac{1}{\lambda} e^{-x/\lambda} dx = 1-\left.\left( 1-e^{-x/\lambda} \right)\right|^{(1+k)\lambda}_{\min\{0, (1-k)\lambda\}} = 
+    \begin{cases}
+    1+e^{-(1+k)}-e^{k-1}, \quad & k \le 1 \\
+    e^{-(1+k)} \quad & k > 1
+    \end{cases}
+    \]
+
+    We can visually inspect the Chebychev's bound,
     
-    
+    \begin{center}
+    \includegraphics[width=4in]{chebychev.pdf}
+    \end{center}
+
+    And clearly we can see that from the plot, the bound is very conservative. 
 \end{document}
