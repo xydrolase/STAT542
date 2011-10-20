@@ -1,0 +1,152 @@
+\documentclass[letterpaper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath, amssymb}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+
+\pagestyle{fancy}
+\fancyhead[L]{STAT 542 HW7}
+\fancyhead[R]{Xin Yin}
+
+\newcommand{\intii}{\int_{-\infty}^\infty}
+\renewcommand{\arraystretch}{1.5}
+
+\begin{document}
+    \section*{4.2}
+    \begin{enumerate}[(a)]
+    \item 
+    \begin{eqnarray*}
+    E(a g_1(X,Y) + b g_2(X, Y) + c) = \intii \intii \left[ a g_1(x, y)f(x,y) + b g_2(x, y)f(x, y) + cf(x,y) \right] dx dy \\
+    = a \intii \intii a g_1(x,y)f(x,y) dxdy + b \intii \intii g_2(x,y) f(x,y) dxdy + c \intii \intii f(x,y)dxdy \\
+    = aE(g_1(X, Y)) + bE(g_2(X,Y)) + c
+    \end{eqnarray*}
+    \item Since $f(x,y) \ge 0$, as well as $g_1(x, y) \ge 0$, we know that,
+    \begin{eqnarray*}
+    E(g_1(X,Y)) = \intii \intii g_1(x,y) f(x,y)dxdy \ge \intii \intii 0 f(x, y) dx dy = 0
+    \end{eqnarray*}
+    So, $E(g_1(X,Y)) \ge 0$.
+    \item If $g_1(x, y) \ge g_2(x, y)$, let $h(x, y) = g_1(x, y) - g_2(x, y) \ge 0$.
+    Hence, applying (a) and (b),
+    \[
+    E(h(X, Y)) = E(g_1(X, Y) - g_2(X, Y)) = E(g_1(X, Y)) - E(g_2(X, Y)) \ge 0
+    \]
+    Rearrange the terms we get,
+    \[
+    E(g_1(X, Y)) \ge E(g_2(X, Y))
+    \]
+    \item
+    Given $a \le g_1(x, y) \le b$, let $h_1(x, y) = g_1(x, y) - a \ge 0$, $h_2(x, y) = b - g_2(x, y) \ge 0$. 
+    Applying (a) and (b), we have,
+    \[
+    E(h_1(X, Y)) \ge 0 \iff E(g_1(X, Y)) - a \ge 0 \iff E(g_1(X, Y)) \ge a
+    \]
+    Similarly,
+    \[
+    E(h_1(X, Y)) \ge 0 \iff b - E(g_1(X, Y)) \ge 0 \iff E(g_1(X, Y)) \le b
+    \]
+    Since $a \le b$, we have,
+    \[
+    a \le E(g_1(X, Y)) \le b
+    \]
+    \end{enumerate}
+    \section*{4.4}
+    \begin{enumerate}[(a)]
+    \item
+    If $f(x, y)$ is sought to be a pdf, it must satisfy,
+    \[
+    \int_0^2 \int_0^1 C(x+2y) dydx = C \int_0^2 \left. xy+y^2 \right|^1_0 dx = \left. (\frac{x^2}{2} + x) \right|^2_0 C = 1
+    \]
+    So, $C=\frac{1}{4}$
+
+    \item The marginal pdf of $X$ is,
+    \[
+    f_X(x) = \int_0^1 \frac{1}{4} (x+2y) dy = \frac{1}{4} \left. (xy + y^2) \right|^0 = \frac{1}{4} (x+1), \quad 0 < x < 2
+    \]
+    \item The joint cdf of $X$ and $Y$ is,
+    For $0 < x < 2, 0 < y < 1$,
+    \[
+    F(x, y) = \int_0^x \int_0^y \frac{1}{4} (x+2y) dy dx = \frac{1}{4} \int_0^x xy + y^2 dx = \frac{1}{4}\left( \frac{x^2y}{2} + xy^2\right)
+    \]
+    For $x \ge 2, 0 < y < 1$,
+    \[
+    F(x, y) = \int_0^2 \int_0^y \frac{1}{4} (x+2y) dy dx = \frac{1}{4} \int_0^2 xy + y^2 dx = \left( \frac{y}{2} + \frac{y^2}{2}\right)
+    \]
+    For $0 < x < 2, y \ge 1$,
+    \[
+    F(x, y) = \int_0^1 \int_0^x \frac{1}{4} (x+2y) dx dy = \frac{1}{4} \int_0^x \frac{x^2}{2} + 2xy dy = \frac{1}{4}\left( \frac{x^2}{2} + x\right)
+    \]
+
+    Hence, the complete cdf is,
+    \[
+    F(x,y) = \begin{cases}
+    0 & x \le 0 ~\text{or}~ y \le 0 \\
+    x^2y/8 + xy^2/4 & 0 < x < 2, 0 < y < 1 \\
+    y/2 + y^2/2 & x \ge 2, 0 < y < 1 \\
+    x^2/8 + x/4 & y \ge 1, 0 < x < 2\\
+    1 & x > 2, y > 1
+    \end{cases}
+    \]
+    \item 
+    For $Z = g(X) = 9/(X+1)^2$, $g(X)$ is monotone on $(0,2)$, and $g^{-1}(z) = \sqrt{9/z} - 1$.
+    So, 
+    \begin{eqnarray*}
+    f_Z(z) = f_X(g^{-1}(z)) \left| \frac{d}{dz} g^{-1}(z) \right| = \frac{3}{4} z^{-1/2} \frac{3}{2} z^{-3/2} \\
+    = \frac{9}{8z^2}, \quad 1 < z < 9.
+    \end{eqnarray*}
+
+    \end{enumerate}
+    \section*{4.5}
+    \begin{enumerate}[(a)]
+    \item
+    \begin{eqnarray*}
+        P(X > \sqrt{y}) = \int_0^1 \int_{\sqrt y}^1 (x+y) dx dy = \int_0^1 \left. \frac{x^2}{2} + xy \right|^1_{\sqrt y} dy\\
+        = \int_0^1 (\frac{1}{2} + \frac{y}{2} - y^{3/2}) dy \\
+        = \frac{1}{2} + \left. \left(\frac{y^2}{4} - \frac{2}{5} y^{5/2} \right) \right|^1_0 = \frac{7}{20}
+    \end{eqnarray*}
+    \item
+    \begin{eqnarray*}
+        P(X^2 < Y < X) = \int_0^1 \int_{x^2}^x 2x dy dy = \int_0^1 \left. 2xy \right|^x_{x^2} dx\\
+        = \int_0^1 2x^2 - 2x^3 dx \\
+        = \left. 2 \left(\frac{x^3}{3} - \frac{x^4}{4} \right) \right|^1_0 = \frac{1}{6}
+    \end{eqnarray*}
+    \end{enumerate}
+    \section*{4.10}
+    \begin{enumerate}[(a)]
+    \item
+    It can be easily shown that,
+    \begin{eqnarray*}
+    P_X(X=2)P_Y(Y=3) = (1/6 + 1/3) \cdot (1/6 + 1/6) = 1/2 \cdot 1/3 = 1/6\\
+    P_{XY}(X=1, Y=2) = 0 \neq P_X(X=2) P_Y(Y=3)
+    \end{eqnarray*}
+    So, $X$ and $Y$ are not independent.
+    \item
+    We first work out the marginal pmf for $X$ and $Y$, 
+    \[
+    \begin{array}{c|ccc}
+    X & 1 & 2 & 3\\
+    \hline
+    P(X) & \frac{1}{4} & \frac{1}{2} & \frac{1}{4}
+    \end{array}
+    \]
+    \[
+    \begin{array}{c|ccc}
+    Y & 2 & 3 & 4\\
+    \hline
+    P(Y) & \frac{1}{3} & \frac{1}{3} & \frac{1}{3}
+    \end{array}
+    \]
+    Now let $U=X$, $V=Y$, and let $P_{UV}(U, V) = P_U(U) P_V(V)$. We will get,
+    \[
+    \begin{array}{cc|ccc}
+    & & & U & \\
+    & & 1 & 2 & 3 \\
+    \hline
+    & 2 & \frac{1}{12} & \frac{1}{6} & \frac{1}{12} \\
+    Y & 3 & \frac{1}{12} & \frac{1}{6} & \frac{1}{12} \\
+    & 4 & \frac{1}{12} & \frac{1}{6} & \frac{1}{12} \\
+    \end{array}
+    \]
+    Now r.v. $U$ and $V$ are independent.
+    \end{enumerate}
+\end{document}
