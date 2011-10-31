@@ -1,0 +1,289 @@
+\documentclass[letterpaper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath, amssymb}
+\usepackage{enumerate}
+\usepackage{fancyhdr}
+
+\pagestyle{fancy}
+\fancyhead[L]{STAT 542 HW8}
+\fancyhead[R]{Xin Yin}
+
+\newcommand{\intii}{\int_{-\infty}^\infty}
+\newcommand{\intzi}{\int_0^\infty}
+\renewcommand{\arraystretch}{1.5}
+
+\begin{document}
+    \section*{4.11}
+    Since $U$ is the number of trials to get the first head, and $V$ is the number of trials to get two heads. If the probability to get a head is $p$, we know that,
+    \[
+    U \sim \text{Geom}(p), u = 1, 2, \dots, \quad V|U \sim \text{Geom}(p), v = u + 1, u + 2, \dots
+    \]
+    So, $V$ depends on $U$, as $U = u, V > u$. They are not independent.
+    \section*{4.13}
+    \begin{enumerate}[(a)]
+    	\item 
+    	\begin{align*}
+    	E(Y-g(X))^2 & = E\left[Y-E(Y|X) + E(Y|X) - g(X)\right]^2 \\
+    	& = E(Y-E(Y|X))^2 + 2E\left[(Y-E(Y|X))(E(Y|X)-g(X))\right] + E(E(Y|X)-g(X))^2 \\
+    	& \text{The cross term equals zero because} \\
+    	& E(Y-E(Y|X)) = EY - EY = 0 \\
+    	& = E(Y-E(Y|X))^2 + E(E(Y|X)-g(X))^2 \ge E(Y-E(Y|X))^2
+    	\end{align*}
+    	The equality only holds when $g(X) = E(Y|X)$. Hence,
+    	\[
+    	\min_{g(x)} E(Y-g(X))^2 = E(Y-E(Y|X))^2
+    	\]
+    	\item If we let $X$ to be a constant, $g(X)$ will be a constant as well (e.g. $b$). Then $E(Y|X) = EY$, and this equation becomes equation (2.2.3).
+    \end{enumerate}
+    \section*{4.14}
+    \begin{enumerate}[(a)]
+     	\item Given that $X$ and $Y$ are independent and $N(0,1)$ random variables,
+     	\[
+     	f(x, y) = \frac{1}{2\pi} e^{-\frac{x^2 + y^2}{2}}, \quad -\infty < x, y < \infty
+     	\]
+     	Let $D$ be the region that $X^2 + Y^2 < 1$, 
+     	\[
+     	P(X^2 + Y^2 < 1) = \iint_D f(x, y) dxdy
+     	\]
+     	
+     	Now let $X = \rho \cos(\phi), Y = \rho \sin(\phi)$, the Jacobian will be,
+     	\[
+     	J = \begin{vmatrix}
+     	\frac{\partial \rho \cos(\phi)}{\partial \rho} & \frac{\partial \rho \sin(\phi)}{\partial \rho} \\
+     	\frac{\partial \rho \cos(\phi)}{\partial \phi} & \frac{\partial \rho \sin(\phi)}{\partial \phi}
+     	\end{vmatrix} = \rho (\cos^2 \phi + \sin^2 \phi) = \rho.
+     	\]
+     	
+     	So, 
+     	\begin{align*}
+     	f(\rho, \phi) & = \frac{1}{2\pi} \rho e^{-\frac{\rho^2}{2}}, \quad 0 < \rho < \infty, 0 < \phi < 2\pi \\
+     	P(X^2 + Y^2 < 1) & = P(\rho^2 < 1, 0 < \phi < 2\pi) \\
+     	& = \int_0^{2\pi} \frac{1}{2\pi} d\phi \int_0^1 \rho e^{-\frac{\rho^2}{2}} d\rho \\
+     	& = \left. e^{-\rho^2/2} \right|^0_1 = 1 - e^{-\frac{1}{2}}
+     	\end{align*}
+	\item Let $Z = g(X) = X^2, 0 < Z < \infty$. Since $g(X)$ is not monotone on $(-\infty, \infty)$, we partition support of $X$ into $A_0, A_1 = (-\infty, 0), A_2 = (0, \infty)$ and, $g^{-1}_1(z) = -\sqrt{z}, g^{-1}_2(z) = \sqrt{z}$.
+	
+	\begin{align*}
+	f(z) &= f_X(-\sqrt{z}) \left| \frac{d -\sqrt{z}}{dz} \right| + f_X(\sqrt{z}) \left| \frac{d\sqrt{z}}{dz} \right| \\
+	& = \frac{1}{\sqrt{2\pi}} z^{-\frac{1}{2}} e^{-\frac{z}{2}} \\
+	& = \frac{1}{\Gamma(1/2) 2^{1/2}} z^{1/2-1} e^{-\frac{z}{2}}, 0 < z < \infty
+	\end{align*}
+	Indeed, $X^2$ follows $\chi_1^2$.
+	
+	So, $P(X^2 < 1)$ is,
+    \begin{align*}
+	P(Z < 1) & = \int_0^1 \frac{1}{\sqrt{2\pi}} z^{-\frac{1}{2}} e^{-\frac{z}{2}} dz \\
+    & = \int_0^1 \frac{2}{\sqrt{2\pi}} e^{-\frac{z}{2}} dz^{\frac{1}{2}} \\
+    & = \left. \frac{2}{\sqrt{2\pi}} e^{-\frac{z}{2}} z^{1/2} \right|^1_0 + \frac{1}{\sqrt{2\pi}} e^{-\frac{z}{2}} z^{1/2} dz
+    \end{align*}
+    We can infinitely expand the integral, and we will end up with a series,
+    \begin{align*}
+    P(Z<1) &= \frac{2e^{-1/2}}{\sqrt{2\pi}} (1 + \frac{1}{3} + \frac{1}{3\cdot5} + \dots) = \frac{2e^{-1/2}}{\sqrt{2\pi}} \sum_{n=0} \frac{1}{(2n+1)!!}
+    & = \frac{2e^{-1/2}}{\sqrt{2\pi}} \sqrt{\frac{\pi}{2}} \text{erf}\left(\frac{1}{\sqrt{2}}\right) e^{1/2} = \text{erf}\left(\frac{1}{\sqrt{2}}\right) \\
+    & = 0.6826895
+    \end{align*}
+	
+        \end{enumerate}
+    \section*{4.16}
+    	\begin{enumerate}[(a)]
+    	\item Assume that $X$ and $Y$ both follows a geometric distribution with parameter $p$, then,
+    	\[
+    	f(x, y) = f(x) f(y) = (1-p)^{x+y-2} p^2
+    	\]
+    	Given that $U = \min(X, Y) \quad \text{and} \quad V = X-Y$,
+    	the support for $f(u, v)$ is $U=1, 2, \dots, V = -\infty, \dots, -1, 0, 1, \dots, \infty$.
+    	If $X > Y, \quad Y = U, \quad X = U+V$,
+    	\[
+    	f_{U,V}(u, v) = P(U=u, V=v) = P_{X, Y}(X=u+v, Y=u) = (1-p)^{2u+v-2}p^2 = (1-p)^{2u-1}p \cdot (1-p)^{v-1}p
+    	\]
+    	Similarly, if $X = Y, \quad U = X = Y, \quad V = 0$,
+    	\[
+    	f(u, v) = P(X=u, Y=u) = (1-p)^{2u-2} p^2 = (1-p)^{u-1}p \cdot (1-p)^{v-1}p
+    	\]
+    	And if $X < Y, \quad X = U, \quad Y = U-V$,
+    	\[
+    	f(u, v) = P(X=u, Y = u-v) = (1-p)^{2u-v-2}p^2 = (1-p)^{2u-1}p \cdot (1-p)^{-v-1}p
+    	\] 
+    	
+    	In any case above, $f(u,v)$ can be factorized to $g(v)$ and $g(u)$. So, $U$ and $V$ are independent.
+    	\item $Z = g(X, Y) = X/(X+Y)$. So,
+        \[
+        f(z) = P(Z=z) = P(g(X,Y) = z) = \sum_{(x,y): g(x, y)=z} f(x, y)
+        \]
+        Noticing that for $X=Y=1$ and $X=Y=2$, $g(1,1) = g(2,2) = \frac{1}{2}$, so we need to find all unique $Z$ values, such that it can be represented by a ratio $\frac{a}{b}$. And $X = ia, Y = i(b-a), \quad i = 1, 2, \dots$.
+
+        So,
+        \begin{align*}
+        f(z) & = \sum_{i=1}^\infty P(X=ia, Y=i(b-a)) = \sum_{i=1} p(1-p)^{ia-1}p(1-p)^{i(b-a)-1} \\
+        & = \sum_{i=1}^\infty p^2(1-p)^{ib-2} = \frac{p^2}{(1-p)^2} (\sum_{i=0}^\infty (1-p)^{ib} - 1) \\
+        & = \frac{p^2(1-p)^b}{(1-p)^2\left(1-(1-p)^b\right)}
+        \end{align*}
+    	\end{enumerate}
+
+    \section*{4.30}
+    	\begin{enumerate}[(a)]
+    	\item Given that $Y|X \sim N(x, x^2)$, and $X \sim \text{Unif}(0,1)$, we have,
+    	\begin{align*}
+    	E(Y|X) & = x, \quad Var (Y|X) = x^2 \\
+    	EX & = \frac{1}{2}, \quad Var X = \frac{1}{12} \\
+    	EY & = E(E(Y|X)) = E(X) = \frac{1}{2} \\
+    	Var Y & = E(Var(Y|X)) + Var(E(Y|X)) = E(X^2) + Var(X) = \frac{1}{3} + \frac{1}{12} = \frac{5}{12} \\
+    	Cov(X, Y) & = EXY - EXEY = E(XE(Y|X)) - EXE(E(Y|X)) = EX^2 - (EX)^2 = Var X = \frac{1}{12}
+    	\end{align*}
+    	\item Let $U= Y/X, \quad V=X$, then we have,
+    	\[
+    	\begin{cases}
+    	X = V \\
+    	Y = UV
+    	\end{cases}
+    	\]
+    	
+    	\[ J = \begin{vmatrix}
+    	\frac{\partial v}{\partial u} & \frac{\partial uv}{\partial u} \\
+    	\frac{\partial v}{\partial v} & \frac{\partial uv}{\partial v}
+    	\end{vmatrix} = -v
+    	\]
+    	
+    	\begin{align*}
+    	f(x, y) & = f(y|x) f(x) = \frac{1}{\sqrt{2\pi} x} e^{-\frac{(y-x)^2}{2x^2}}, \quad -\infty < y < \infty, \quad 0 < x < 1 \\
+    	& \text{So, } \\
+    	f_{U, V}(u, v) & = f_{X, Y}(v, uv) |J| = \frac{1}{\sqrt{2\pi} v} v e^{-\frac{(uv-v)^2}{2v^2}}, \quad 0 < v < 1, -\infty < u < \infty \\
+    	& = \frac{1}{\sqrt{2\pi}} e^{-\frac{(u-1)^2}{2}} \quad 0 < v < 1, -\infty < u < \infty 
+    	\end{align*}
+    	
+    	Since $f(u, v)$ can be factorized into $g(u)$ and $g(v)$, $U, V$ are independent.
+	\end{enumerate}	
+    \section*{4.31}
+    \begin{enumerate}[(a)]
+    	\item Given that $Y|X \sim \text{Bin}(n, X)$, we have,
+    	\begin{align*}
+    	E(Y|X) & = nx, \quad 0 < x < 1 \\
+    	Var(Y|X) &= nx(1-x), \quad 0 < x < 1\\
+    	EY & = E(E(Y|X)) = E(nX) = nE(X) = \frac{n}{2} \\
+    	Var(Y) & = E(Var(Y|X)) + Var(E(Y|X)) \\
+    	& = E(nX(1-X)) + Var(nX) = nE(X) - nE(X^2) + n^2 Var(X) \\
+    	& = \frac{n}{6} + \frac{n^2}{12}
+    	\end{align*}
+    	\item Given that
+    	\[
+    	f_X(x) = 1, \quad 0 < x < 1,
+    	\]
+    	the joint density is,
+    	\[
+    	f(x, y) = f(y|x) f(x) = \binom{n}{y} x^y (1-x)^{n-y}, \quad 0 < x < 1, \quad y = 0, 1, \dots, n
+    	\]
+    	\item The marginal mass function for y is,
+    	\[
+    	f_Y(y) = \int_0^1 \binom{n}{y} x^y (1-x)^{n-y} dx = \binom{n}{y} \int_0^1 x^y (1-x)^{n-y}dx.
+    	\]
+    	Given that $y > 0, n-y > 0$, the integral is a Beta function. Hence,
+    	\[
+    	f_Y(y) = \binom{n}{y} B(y, n-y).
+    	\] 
+    \end{enumerate}
+    \section*{4.32}
+    \begin{enumerate}[(a)]
+    	\item
+    	\begin{align*}
+    	f_{Y, \Lambda}(y, \lambda) &= f(y|\lambda)f_\Lambda(\lambda) \\
+    	& = \frac{e^{-\lambda} \lambda^y}{y!} \frac{e^{-\frac{\lambda}{\beta}} \lambda^{\alpha-1}}{\Gamma(\alpha)\beta^\alpha}, \quad 0 < \lambda < \infty, y = 0, 1, \dots\\
+    	\\
+    	f_Y(y) &= \intzi f(y, \lambda) d\lambda \\
+    	& = \frac{1}{y! \Gamma(\alpha) \beta^\alpha} \intzi e^{-\frac{\beta+1}{\beta} \lambda} \lambda^{y+\alpha-1} d\lambda \\
+    	& = \frac{\Gamma(y+\alpha)\left(\frac{\beta}{\beta+1}\right)^{y+\alpha}}{y!\Gamma(\alpha) \beta^\alpha} \intzi \frac{e^{-\frac{\beta+1}{\beta} \lambda} \lambda^{y+\alpha-1}}{\Gamma(y+\alpha)\left(\frac{\beta}{\beta+1}\right)^{y+\alpha}} d\lambda, \quad y = 0, 1, \dots\\
+    	& \text{Given that $y$ and $\alpha$ are integers, and also that the integrand is Gamma pdf,} \\ 
+    	& = \frac{(y+\alpha-1)!}{y!(\alpha-1)!} \left(\frac{\beta}{1+\beta}\right)^y \left(\frac{1}{\beta+1}\right)^\alpha \\
+    	& = \binom{y+\alpha-1}{y} \left(\frac{\beta}{1+\beta}\right)^y \left(\frac{1}{\beta+1}\right)^\alpha, \quad y = 0, 1, \dots, 
+    	\end{align*}
+    	which is the pmf for NegBin$(\alpha, \frac{1}{1+\beta})$.
+    	\item Given that $Y|N \sim \text{Bin}(n, p), \quad, N|\Lambda \sim \text{Pois}(\Lambda)$, the joint distribution of $Y, N$ conditional on $\Lambda$ is,
+        \[
+        f(y, n|\lambda) = \binom{n}{y} p^y(1-p)^{n-y} \frac{e^{-\lambda}\lambda^n}{n!}, \quad y = 0, 1, \dots, n, \quad n = y, y + 1, \dots
+        \]
+
+        Therefore,
+        \begin{align*}
+        f(y|\lambda) & = \sum_{n=y}^\infty \binom{n}{y}p^y(1-p)^{n-y} \frac{e^{-\lambda}\lambda^n}{n!} \\
+        & = \frac{p^y e^{-\lambda}}{y!} \sum_{n=y}^\infty \frac{n!}{(n-y)!} (1-p)^{n-y} \frac{\lambda^n}{n!} \\
+        & = \frac{p^y e^{-\lambda}}{y!} \sum_{n=0}^\infty \frac{(1-p)^n}{n!} \lambda^{n+y} \\
+        & = \frac{(p\lambda)^y e^{-\lambda}}{y!} \sum_{n=0}^\infty \frac{\left(\lambda(1-p)\right)^n}{n!} \\
+        & = \frac{(p\lambda)^y e^{-p\lambda}}{y!}
+        \end{align*}
+        
+        Obviously, $Y|\Lambda \sim \text{Pois}(p\Lambda)$. Provided that $\Lambda \sim \text{Gamma}(\alpha, \beta)$, we can then work out the marginal distribution for $Y$.
+        \begin{align*}
+        f(y, \lambda) & = f_{Y|\Lambda}(y|\lambda)f_\Lambda(\lambda) = \frac{e^{-p\lambda} (p\lambda)^y}{y!} \frac{e^{-\frac{\lambda}{\beta}} \lambda^{\alpha-1}}{\Gamma(\alpha)\beta^\alpha}, \quad 0 < \lambda < \infty, y = 0, 1, \dots \\
+        f(y) & = \intzi f(y, \lambda) d\lambda \\
+        & = \frac{p^y \Gamma(\alpha +y)\left(\frac{\beta}{1+p\beta}\right)^{\alpha+y}}{\Gamma(\alpha)\beta^\alpha y!} \intzi \frac{e^{-\frac{1+p\beta}{\beta} \lambda} \lambda^{y+\alpha-1}}{\Gamma(\alpha+y)\left(\frac{\beta}{1+p\beta}\right)^{y+\alpha}} d \lambda \\
+        & \text{Noticing that the integrand is a Gamma pdf}, \\
+        & = \frac{(\alpha+y-1)!}{(\alpha-1)!y!} \left(\frac{1}{1+p\beta}\right)^\alpha \left(\frac{p\beta}{1+p\beta}\right)^y \\
+        & = \binom{\alpha+y-1}{y} \left(\frac{1}{1+p\beta}\right)^\alpha \left(\frac{p\beta}{1+p\beta}\right)^y, \quad y = 0, 1, \dots,
+        \end{align*}
+        
+        Hence, $Y \sim \text{NegBin}(\alpha, \frac{1}{1+p\beta})$.
+    \end{enumerate}
+    \section*{4.35}
+    \begin{enumerate}[(a)]
+    	\item Given that,
+    	\begin{align*}
+    	X|P & \sim \text{Bin}(n, P), \\
+    	P & \sim \text{Beta}(\alpha, \beta).
+    	\end{align*}
+    	We can have,
+    	\begin{align*}
+    	Var X & = E(Var(X|P)) + Var(E(X|P)) = E(nP(1-P)) + Var(nP) \\
+    	& = nEP - nEP^2 + n^2 Var P = nEP - n(Var P + (EP)^2) + n^2 Var P \\
+    	& = nEP(1-EP) + n(n-1) Var P
+    	\end{align*}
+    	\item Similarly, as $Y|\Lambda \sim \text{Poisson}(\Lambda)$, 
+    	\[
+    	E(Y|\Lambda) = \Lambda, \quad Var (Y|\Lambda) = \Lambda.
+    	\]
+    	\begin{align*}
+    	Var Y & = E(Var(Y|\Lambda)) + Var(E(Y|\Lambda)) \\
+    	& = E(\Lambda) + Var(\Lambda) \\
+    	& \text{As}~ \Lambda \sim \text{Gamma}(\alpha, \beta), \\
+    	& = \alpha\beta + \alpha \beta^2 = \alpha\beta + \frac{(\alpha\beta)^2}{\alpha}.
+    	\end{align*}
+    	If we let $\alpha\beta = \mu = E\Lambda$, then,
+    	\[
+    	Var Y = \mu + \frac{1}{\alpha} \mu^2.
+    	\]
+    \end{enumerate}
+    \section*{4.58}
+    \begin{enumerate}[(a)]
+    \item
+    \begin{eqnarray*}
+    Cov(X, Y) & = EXY - EXEY = E\left(E(XY|X)\right) - EX E\left( E(Y|X) \right) \\
+    & = E\left(XE(Y|X)\right) - EX E\left( E(Y|X) \right) \\
+    & = Cov(X, E(Y|X)) 
+    \end{eqnarray*}
+    \item
+    \begin{eqnarray*}
+    Cov(X, Y-E(Y|X)) & = E\left(X(Y-E(Y|X))\right) - EXE(Y-E(Y|X)) \\
+    & = E(XY-XE(Y|X)) - EX(EY-E(E(Y|X))) \\
+    & = EXY - E(E(XY|X)) - EXEY + EXE(E(Y|X)) \\
+    & = EXY - EXY - EXEY + EXEY = 0
+    \end{eqnarray*}
+    Thus, $X$ and $Y-E(Y|X)$ are uncorrelated.
+    
+    \item 
+    \begin{align*}
+    lhs: &\\
+    Var(Y-E(Y|X)) &= VarY + Var(E(Y|X)) - 2Cov(Y, E(Y|X)) \\
+    & = Var Y + Var(E(Y|X)) - 2E(YE(Y|X)) + 2EYE(E(Y|X)) \\
+    & = Var Y + Var(E(Y|X)) - 2E(E^2(Y|X)) + 2\left[E(E(Y|X))\right]^2 \\
+    & = Var Y + Var(E(Y|X)) - 2Var(E(Y|X)) \\
+    & = Var(Y) - Var(E(Y|X)) = E(Var(Y|X)) = rhs.
+    \end{align*}
+    \end{enumerate}
+    
+    \section*{4.59}
+    \begin{eqnarray*}
+    rhs:  \\
+    E(Cov(X,Y|Z)) + Cov(E(X|Z), E(Y|Z)) \\
+     = E(E(XY|Z) - E(X|Z)E(Y|Z)) + E(E(X|Z)E(Y|Z)) - E(E(X|Z))E(E(Y|Z)) \\
+    = E(XY) - E(E(X|Z)E(Y|Z)) + E(E(X|Z)E(Y|Z)) - E(X)E(Y) \\
+    = E(XY) - E(X)E(Y) = Cov(X, Y)
+    \end{eqnarray*}
+\end{document}
