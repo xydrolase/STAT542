@@ -154,6 +154,10 @@
     & = \frac{1}{\pi}\frac{1}{1+z^2}
     \end{align*}
     So, $X/|Y|$ has a Cauchy$(1,1)$ distribution.
+    \item If $X_i \stackrel{iid}{\sim} N(0,1), \quad i=1, 2, \dots, k$, 
+    \[
+    \frac{X_j}{\sum_{i=1}^k X_i} \sim \text{Cauchy}(1/k, 1/k).
+    \]
     \end{enumerate}
 
     \section*{4.30}
@@ -215,5 +219,115 @@
     & = \frac{1}{\sqrt{2\pi}\sigma_Y\sqrt{1-\rho^2}} e^{-\cfrac{\left((y-\mu_Y) - \frac{\rho\sigma_Y (x-\mu_X)}{\sigma_X}\right)^2}{2\sigma^2(1-\rho^2)}}
     \end{align*}
     And this is the pdf for $N(\mu_Y + \rho(x-\mu_X)\frac{\sigma_Y}{\sigma_X}, \sigma^2_Y(1-\rho^2))$.
+    \end{enumerate}
+    \section*{4.46}
+    \begin{enumerate}[(a)]
+    \item Because $Z_1$ and $Z_2$ are independent $N(0,1)$ random variables,and $a_X, b_X, c_X, a_Y, b_Y, c_Y$ are all constants, we can have,
+    \begin{align*}
+    E(Z_i) & = 0 \quad Var(Z_i) = 1 \\
+    EX & = E(a_X Z_1 + b_X Z_2 + c_X) = a_X E(Z_1) + b_X E(Z_2) + c_X = c_X \\
+    Var X & = Var(a_X Z_1 + b_X Z_2 + c_X) = a_X^2 E(Z_1) + b_X^2 E(Z_2) = a_X^2 + b_X^2 \\
+    EY & = E(a_Y Z_1 + b_Y Z_2 + c_Y) = a_Y E(Z_1) + b_Y E(Z_2) + c_Y = c_Y \\
+    Var Y & = Var(a_Y Z_1 + b_Y Z_2 + c_Y) = a_Y^2 E(Z_1) + b_Y^2 E(Z_2) = a_Y^2 + b_Y^2 \\
+    Cov(X,Y) & = EXY - EXEY\\
+    &= E\big(a_Xa_Y Z_1^2 + (a_Xb_Y + b_Xa_Y) Z_1Z_2 + b_X b_Y Z_2^2 + \\
+    & + c_Xc_Y + c_Xa_YZ_2 + c_Xb_YZ_2 + c_Ya_XZ_1 + c_Yb_XZ_1\big) - c_Xc_Y \\
+    \end{align*}
+    Given that 
+    \[
+    E(Z_i^2) = \intii z^2 \frac{1}{\sqrt{2\pi}} e^{-z^2/2} dz = \left.\frac{1}{\sqrt{2\pi}} z e^{-z^2/2} \right|^{-\infty}_\infty + \intii \frac{1}{\sqrt{2\pi}} e^{-z^2/2} dz = 1,
+    \]
+    because the integrand is a normal pdf, and that
+    \[
+    E(Z_1Z_2) = E(Z_1)E(Z_2) = 0,
+    \]
+    we have,
+    \[
+    Cov(X, Y) = a_Xa_Y + b_X b_Y + c_Xc_Y - c_Xc_Y = a_Xa_Y + b_Xb_Y
+    \]
+    \item Simply plug in following constants into the expressions we derived in (a),
+    \begin{align*}
+    a_X = \sqrt{\frac{1+\rho}{2}} \sigma_X,  & \quad b_X = \sqrt{\frac{1-\rho}{2}} \sigma_X, & c_X = \mu_X \\
+    a_Y = \sqrt{\frac{1+\rho}{2}} \sigma_Y,  & \quad b_Y = -\sqrt{\frac{1-\rho}{2}} \sigma_Y, & c_Y = \mu_Y \\
+    \end{align*}
+    we will get,
+    \begin{align*}
+    EX = c_X = \mu_X, \quad & Var X = a_X^2 + b_X^2 = \frac{1+\rho}{2} \sigma_X^2 + \frac{1-\rho}{2} \sigma_X^2 = \sigma_X^2, \\
+    EY = c_Y = \mu_Y, \quad & Var Y = a_Y^2 + b_Y^2 = \frac{1+\rho}{2} \sigma_Y^2 + \frac{1-\rho}{2} \sigma_Y^2 = \sigma_Y^2, \\
+    \end{align*}
+    \[
+    \rho_{XY} = \frac{Cov(X,Y)}{\sigma_X \sigma_Y} =\frac{a_X a_Y + b_X b_Y}{\sigma_X \sigma_Y} = \frac{\frac{1+\rho}{2} \sigma_X \sigma_Y - \frac{1-\rho}{2} \sigma_X \sigma_Y}{\sigma_X \sigma_Y} = \rho.
+    \]
+
+    \item 
+    Provided that,
+    \begin{align*}
+    X & = a_X Z_1 + b_X Z_2 + c_X \\
+    & = \sqrt{\frac{1+\rho}{2}} \sigma_X Z_1 + \sqrt{\frac{1-\rho}{2}} \sigma_X Z_1 + c_X \\
+    Y & = a_Y Z_1 + b_Y Z_2 + c_Y \\
+    & = \sqrt{\frac{1+\rho}{2}} \sigma_Y Z_1 - \sqrt{\frac{1-\rho}{2}} \sigma_Y Z_1 + c_Y \\
+    \\
+    a_Y X + a_X Y & = 2 a_X a_Y Z_1 + a_Y c_X + a_X c_Y + (a_X b_Y + a_Y b_X) Z_2 \\
+    & = 2 a_X a_Y Z_1 + a_X c_Y + a_Y c_X \\
+    \iff Z_1 & = \frac{a_Y (X-c_X) + a_X (Y - c_Y)}{2a_Xa_Y} \\
+    & = \frac{\sqrt{\frac{1+\rho}{2}} (\sigma_Y(X-\mu_X) + \sigma_X(Y-\mu_Y))}{(1+\rho) \sigma_X \sigma_Y} \\
+    & = \frac{\sigma_Y(X-\mu_X) + \sigma_X(Y-\mu_Y)}{\sqrt{2(1+\rho)}\sigma_X \sigma_Y} \\
+    \end{align*}
+    Plug in $Z_1$ into expression of $X$ and $Y$,
+    \begin{align*}
+    X & = a_X Z_1 + b_X Z_2 + c_X\\
+    & = \sqrt{\frac{1+\rho}{2}} \sigma_X \frac{\sigma_Y(X-\mu_X) + \sigma_X(Y-\mu_Y)}{\sqrt{2(1+\rho)}\sigma_X \sigma_Y} + b_X Z_2 + \mu_X \\
+    & = \frac{\sigma_Y(X-\mu_X) + \sigma_X (Y - \mu_Y)}{2 \sigma_Y} + b_X Z_2 + \mu_X\\
+    \\
+    Y & = a_Y Z_1 + b_Y Z_2 + c_Y\\
+    & = \sqrt{\frac{1+\rho}{2}} \sigma_Y \frac{\sigma_Y(X-\mu_X) + \sigma_X(Y-\mu_Y)}{\sqrt{2(1+\rho)}\sigma_X \sigma_Y} + b_Y Z_2 + \mu_Y \\
+    & = \frac{\sigma_Y(X-\mu_X) + \sigma_X (Y - \mu_Y)}{2 \sigma_X} + b_Y Z_2 + \mu_Y\\
+    \\ 
+    & \text{So,}\\
+    (b_X + b_Y) Z_2 & = (X - \mu_X)/2 + (Y-\mu_Y)/2 - \frac{\sigma_X}{2\sigma_Y}(Y-\mu_Y) - \frac{\sigma_Y}{2\sigma_X}(X-\mu_X) \\
+    \iff Z_2 & = \frac{(X-\mu_X) (\frac{\sigma_X - \sigma_Y}{\sigma_X}) + (Y-\mu_Y) (\frac{\sigma_Y-\sigma_X}{\sigma_Y})}{\sqrt{2(1-\rho)} (\sigma_X - \sigma_Y)} \\
+    & = \frac{(X-\mu_X)/\sigma_X - (Y-\mu_Y)/\sigma_Y}{\sqrt{2(1-\rho)}} \\
+    & = \frac{\sigma_Y(X-\mu_X) - \sigma_X(Y-\mu_Y)}{\sqrt{2(1-\rho)}\sigma_X \sigma_Y} \\
+    \end{align*}
+
+    The Jacobian is,
+    \[
+    J = \begin{vmatrix}
+    \frac{\partial Z_1}{x} & \frac{\partial Z_1}{y}\\
+    \frac{\partial Z_2}{x} & \frac{\partial Z_2}{y}\\
+    \end{vmatrix} = -\frac{1}{\sqrt{1-\rho^2} \sigma_X \sigma_Y}
+    \]
+
+    Hence,
+    \begin{align*}
+    f(X, Y) & = f(Z_1)f(Z_2) |J|\\
+    & = \frac{1}{2\pi} e^{-\frac{\left(\frac{\sigma_Y(X-\mu_X) + \sigma_X(Y-\mu_Y)}{\sqrt{2(1+\rho)}\sigma_X \sigma_Y}\right)^2}{2}} e^{-\frac{\left(\frac{\sigma_Y(X-\mu_X) - \sigma_X(Y-\mu_Y)}{\sqrt{2(1-\rho)}\sigma_X \sigma_Y}\right)^2}{2}} \frac{1}{\sqrt{2(1-\rho^2)}\sigma_X \sigma_Y} \\
+    & = \frac{1}{2\pi\sqrt{1-\rho^2}\sigma_X\sigma_Y} \exp\Big\{-\big(\frac{(X-\mu_X)^2}{\sigma_X^2} + \frac{(Y-\mu_Y)^2}{\sigma_Y^2} \big) \big(\frac{1}{4(1+\rho)} + \frac{1}{4(1-\rho)} \big) \\
+    & \quad + 2\frac{(X-\mu_X)(Y-\mu_Y)}{\sigma_X\sigma_Y}\left(\frac{1}{4(1+\rho)} - \frac{1}{4(1-\rho)}\right)\Big\} \\
+    & = \frac{1}{2\pi\sqrt{1-\rho^2}\sigma_X\sigma_Y} \exp\left(-\frac{1}{2(1-\rho^2)}\left(\frac{(X-\mu_X)^2}{\sigma_X^2} + \frac{(Y-\mu_Y)^2}{\sigma_Y^2} -2\rho \frac{(X-\mu_X)(Y- \mu_Y)}{\sigma_X\sigma_Y} \right)\right), \\
+    & \qquad -\infty < x, y < \infty
+    \end{align*}
+    As we can see, this is the bivariate normal density with parameters $\mu_X, \mu_Y, \sigma_X^2, \sigma_Y^2$ and $\rho$.
+
+    \item Given equations,
+    \begin{align*}
+    \mu_X = c_X, \quad \sigma_X^2 = a_X^2 + b_X^2\\
+    \mu_Y = c_Y, \quad \sigma_Y^2 = a_Y^2 + b_Y^2\\
+    \rho \sigma_X \sigma_Y = a_X a_Y + b_Xb_Y
+    \end{align*}
+    Let $a_X = \pm \sqrt{\sigma_X^2 - b_X^2}, \quad a_Y = \pm \sqrt{\sigma_Y^2 - b_Y^2}$, we will have,
+    \[
+    \rho \sigma_X \sigma_Y = a_X a_Y + \pm \sqrt{\sigma_X^2 - b_X^2}\sqrt{\sigma_Y^2 - b_Y^2}
+    \]
+    which leads to,
+    \[
+    a_X^2 a_Y^2 + \rho^2 \sigma_X^2 \sigma_Y^2 -2 \rho \sigma_X \sigma_Y a_X a_Y = (\sigma_X^2 - a_X^2)(\sigma_Y^2 - a_Y^2)
+    \]
+    and further leads to,
+    \[
+    \sigma_Y^2 a_X^2 + \sigma_X^2 a_Y^2 - 2\rho a_X a_Y \sigma_X \sigma_Y + (\rho^2 -1)\sigma_X^2 \sigma_Y^2  = 0
+    \]
+
+    And this is a general ellipse formula for variable $a_X, a_Y$. So, there will be infinite solutions for $a_X$ and $a_Y$ and consequently infinite solutions too for $b_X, b_Y$.
     \end{enumerate}
 \end{document}
