@@ -1,0 +1,312 @@
+\documentclass[letterpaper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath, amssymb}
+\usepackage{enumerate}
+\usepackage{fancyhdr}
+
+\pagestyle{fancy}
+\fancyhead[L]{STAT 542 HW10}
+\fancyhead[R]{Xin Yin}
+
+\newcommand{\intii}{\int_{-\infty}^\infty}
+\newcommand{\Xone}{X_{(1)}}
+\newcommand{\Xn}{X_{(n)}}
+\newcommand{\sumi}{\sum_{i=1}^n}
+\newcommand{\sumj}{\sum_{j=1}^n}
+\newcommand{\intzi}{\int_0^\infty}
+\renewcommand{\arraystretch}{1.5}
+
+\begin{document}
+    \section*{5.3}
+    \[
+    Y_i = I(X_i > \mu) = 
+    \begin{cases}
+    1 \quad 1 - F_X(\mu) \\
+    0 \quad F_X(\mu) 
+    \end{cases}
+    \]
+    And because $X_i$'s are iid random variables, $Y_i$'s are iid Bernoulli random variables.
+
+    So,
+    \[
+    \sum_{i=1}^n Y_i \sim \text{Binomial}(n, 1-F_X(\mu)),
+    \]
+    \emph{i.e.}
+    \[
+    f_Y(y) = \binom{n}{y} (1-F_X(\mu))^y F_X^{n-y}(\mu) 
+    \]
+    \section*{5.6}
+    \begin{enumerate}[(a)]
+    \item
+    Let $Z = X - Y, \quad W = X$, and $Y = W-Z, \quad X=W$. The Jacobian is,
+    \[
+    J = \begin{vmatrix}
+    \frac{\partial w}{\partial w} & \frac{\partial w}{\partial z} \\
+    \frac{\partial w-z}{\partial w} & \frac{\partial w-z}{\partial z} \\
+    \end{vmatrix} = -1
+    \]
+
+    Since $X$ and $Y$ are independent, 
+    \[
+    f_{X,Y}(x, y) = f_X(x) f_Y(y).
+    \]
+    So, 
+    \[
+    f_{Z,W}(z, w) = f_{X,Y}(w, w-z) = f_X(w) f_Y(w-z).
+    \]
+    To get the pdf of $f_Z$, we integrate out $w$, and we get,
+    \[
+    f_Z(z) = \intii f_X(w) f_Y(w-z) dw
+    \]
+    \item
+    Let $Z = XY, W = Y$, $X = Z/W, Y = W$,
+    \[
+    J = \begin{vmatrix}
+    \frac{\partial z/w}{\partial z} & \frac{\partial z/w}{\partial w} \\
+    \frac{\partial z/w}{\partial z} & \frac{\partial w-z}{\partial w} \\
+    \end{vmatrix} = 1/w 
+    \]
+
+    Thus,
+    \[
+    f_Z(z) = \intii f_{Z, W}(z, w) |J| dw = \intii f_X(z/w)f_Y(w) |1/w| dw
+    \]
+    \item $Let Z=X/Y, W = Y$, $X = ZW, Y = W$, 
+    \[
+    J = \begin{vmatrix}
+    \frac{\partial zw}{\partial z} & \frac{\partial zw}{\partial w} \\
+    \frac{\partial w}{\partial z} & \frac{\partial w}{\partial w} \\
+    \end{vmatrix} = w 
+    \]
+
+    Thus,
+    \[
+    f_Z(z) = \intii f_{Z,W}(z, w) dw = \intii f_X(zw) f_Y(w) |w| dw
+    \]
+    \end{enumerate}
+
+    \section*{5.8}
+    \begin{enumerate}[(a)]
+    \item 
+    \begin{align*}
+    rhs & = \frac{1}{2n(n-1)} \sumi \sumj (X_i - X_j)^2 \\
+    & = \frac{1}{2n(n-1)} \sumi \sumj  X_i^2 - 2X_iX_j + X_j^2 \\
+    & = \frac{1}{2n(n-1)} \sumi \left[ n X_i^2 - 2 X_i \sumj X_j + \sumj X_j^2 \right] \\
+    & = \frac{1}{2n(n-1)} n E(X^2) - 2 n E^2(X) + n E(X^2) = \frac{1}{n-1} n(E(X^2) - E^2(X)) \\
+    & = \frac{n}{n-1} Var(X) = S^2 = lhs
+    \end{align*}
+    \item Let $Y_i = X_i - \theta_1$, then $\theta_j = E(X_i - \theta_1)^2 = EY_i^2$, for $j = 2, 3, 4$.
+
+    So, 
+    \begin{align*}
+    ES^2 &= E\left(\frac{1}{2n(n-1)} \sumi \sumj (X_i - X_j)^2\right) \\
+    & = \frac{1}{2n(n-1)} \sum_{i \ne j} E(Y_i - Y_j)^2 = \frac{1}{2} E(Y_1 - Y_2)^2 \\
+    & = \frac{1}{2} \left(EY_1^2 - 2EY_1Y_2 + EY_2^2 = 2EY_1^2 - 2(EY1)^2\right) \\
+    & = Var(Y_1) = \theta_2
+    \end{align*}
+    \begin{align*}
+    ES^4 & = \left(\frac{1}{2n(n-1)}\right)^2 E \sum_{i\ne j} \sum_{k \ne m} (Y_i - Y_j)^2 (Y_k - Y_m)^2 \\
+    & = \frac{1}{4n^2(n-1)^2} \sum_{i\ne j}{k\ne m} Eb_{ijkm}, \text{where} ~ b_{ijkm} = (Y_i - Y_j)^2(Y_k - Y_m)^2 
+    \end{align*}
+    If $ i \ne j \ne k \ne m$,
+    \[
+    Eb_{ijkm} = E(Y_i-Y_j)^2 E(Y_k - Y_m)^2 = \left[ E(Y_1-Y_2)^2\right]^2 = 4 \theta_2^2
+    \]
+    If $ i = k \ne j \ne m$,
+    \begin{align*}
+    Eb_{ijkm} & = E(Y_i-Y_j)^2 (Y_i - Y_m)^2 \\
+    & = E(Y_i^2 - 2Y_iY_j + Y_j^2) (Y_i^2 - 2 Y_i Y_m + Y_m^2)\\
+    & = EY_1^4 + 3(EY_1^2)^2 = \theta_4 + 3\theta_2^2
+    \end{align*}
+    Above result will also hold for where $i = m \ne j \ne k, \quad j=k\ne i \ne m$ and $j = m \ne i \ne k$.
+
+    Finally, if $i = k, j = m, i \ne j \text{or}~ i = m, j = k, i \ne j$, 
+    \[
+    Eb_{ijkm} = E(Y_i - Y_j)^4 = 2\theta_4 + 6\theta_2^2 
+    \]
+
+    For $i \ne j \ne k \ne m$, there are $n(n-1)(n-2)(n-3)$ cases satisfying this condition. Similarly, $4n(n-1)(n-2)$ combinations for $i = k \ne j \ne m$ and 3 other similar cases; $2n(n-1)$ combinations for $i=j, j=m, i \ne j$ and one similar case.
+    So,
+    \begin{align*}
+    ES^4 & = \frac{1}{4n^2(n-1)^2} \Big(n(n-1)(n-2)(n-3)4\theta_2^2 + 4n(n-1)(n-2) (\theta_4 + 3\theta_2^2) + 2n(n-1) (2\theta_4 + 6\theta_2^2) \Big) \\
+    & = \frac{1}{n(n-1)} \left((n-1)\theta_4 + (n^2 - 2n+3) \theta_2^2 \right)
+    \end{align*}
+    
+    And,
+    \[
+    Var(S^2) = ES^4 - (ES^2)^2 = \frac{1}{n} \left(\theta_4 - \frac{n-3}{n-1} \theta_2^2 \right)
+    \]
+    
+    \item
+    \[
+    Cov(\bar X, S^2) = E\bar X S^2 - EX ES^2
+    \]
+    And, 
+    \[
+    E\bar X S^2 = \frac{E \left[ \sum_{k=1}^n X_k \sumi \sumj (X_i - X_j)^2 \right]}{2n^2(n-1)} 
+    \]
+    For $k = i \ne j$,  or $k = j \ne i$, we have $2n(n-1)$ terms with following expectation,
+    \[
+    E( X_k  (X_i - X_j)^2 ) = E(X_i^3 - 2X_i^2X_j + X_j^2 X_i) = E(X_i^3) - \theta_1 E(X_i^2),
+    \]
+
+    For $k \ne i \ne j$,
+    \[
+    E( X_k (X_i - X_j)^2) = E(X_i^2X_k - 2X_iX_jX_k + X_j^2 X_k) = 2\theta_1E(X_i^2) - 2\theta_1^3,
+    \]
+    and in total, $n(n-1)(n-2)$ terms.
+
+    So, 
+    \begin{align*}
+    E\bar X S^2 & = \frac{1}{2n^2(n-1)} \left[2n(n-1) \left(E(X_i^3) - \theta_1 E(X_i^2)\right) + 2n(n-1)(n-2) \left(\theta_1 E(X_i^2) - \theta_1^3 \right) \right] \\
+    & = \frac{E(X_i^3) - \theta_1 E(X_i^2)}{n} + \frac{(n-2)(\theta_1E(X_i^2) - \theta_1^3)}{n} \\
+    & = \frac{E\left(X_i^3 - 3 E(X_i) X_i^2 + 2E^3(X_i)\right)}{n} + \theta_1 E(X_i^2) - \theta_1^3 
+    \end{align*}
+
+    Notice that $\theta_1 E(X_i^2) - \theta_1^3 = \theta_1 (E(X_i^2) - (E(X_i))^2) = \theta_1 \theta_2$.
+
+    Also,
+    \begin{align*}
+    & E\left(X_i^3 - 3E(X_i) X_i^2 + 2E^3(X_i) \right) \\ 
+    & \quad = E\left(X_i^3 - 3E(X_i) X_i^2 + 3E^2(X_i)X_i - E^3{X_i}\right) + E\left[3E^3(X_i) - 3E^2(X_i)X_i\right] \\
+    & \quad = E(X_i - E(X_i))^3 + 3E^2(X_i) E(X_i - E(X_i)) \\
+    & \quad = E(X_i - E(X_i))^3 = \theta_3
+    \end{align*}
+
+    So,
+    \[
+    Cov(\bar X, S^2) = E\bar X S^2 - E\bar X - ES^2 = \frac{\theta_3}{n} + \theta_1\theta_2 - \theta_1\theta_2 = \frac{\theta_3}{n}
+    \]
+    and we have $Cov(\bar X, S^2) = 0$ when $\theta_3 = 0$.
+    \end{enumerate}
+
+    \section*{5.24}
+    Given $\Xone, \dots, \Xn$ are order statistics from random variables with pdf $f_X(x) = \frac{1}{\theta}I(0 < x < \theta)$, $F_X(x) = \frac{x}{\theta}$.
+    Using the formula of joint distribution of order statistics, we have,
+    \[
+    f_{\Xone, \Xn}(u, v) = \frac{n!}{(1-1)!(n-2)!(n-n)!} f_X(u) f_X(v) \left(\frac{u}{\theta}\right)^{1-1} \left(\frac{v-u}{\theta}\right)^{n-2} \left(1-\frac{v}{\theta}\right)^{1-1}  = n(n-1) \frac{(v-u)^{n-2}}{\theta^n}
+    \]
+
+    Now let $P = \frac{U}{V} = \frac{\Xone}{\Xn}, Q = V = \Xn$, $U = PQ, V=Q$.
+    \[
+    J = \begin{vmatrix}
+    \frac{\partial pq}{\partial p} & \frac{\partial pq}{\partial q} \\
+    \frac{\partial q}{\partial p} & \frac{\partial q}{\partial q} \\
+    \end{vmatrix} = q 
+    \]
+
+    Then, 
+    \[
+    f_{\Xone/\Xn, \Xn}(p, q) = f_{\Xone, \Xn}(pq, q) = n(n-1) \frac{(q-pq)^{n-2}}{\theta^n} q = \frac{q^{n-1}(1-p)^{n-2}}{\theta^n} n(n-1)
+    \]
+
+    We can easily see that this joint pdf can be factorized into $g_1(p)$ and $g_2(q)$. Thus, $\Xone/\Xn$ and $\Xn$ are independent.
+    
+    \section*{5.32}
+    \begin{enumerate}[(a)]
+    \item Because $X_n \stackrel{p}{\rightarrow} a$, 
+    \begin{align*}
+    \lim_{n\to\infty} P(|\sqrt{X_n} - \sqrt{a}| > \epsilon) & = \lim_{n\to\infty}P(|\sqrt{X_n} - \sqrt{a}||\sqrt{X_n} + \sqrt{a} > \epsilon|\sqrt{X_n} + \sqrt{a}|) \\
+    & = \lim_{n\to\infty} P(|X_n - a| > \epsilon|\sqrt{X_n} + \sqrt{a}|) \le \lim_{n\to\infty} P(|X_n -a | > \epsilon\sqrt{a})
+    \end{align*}
+    Since $\forall \epsilon > 0$, $\lim_{n\to\infty} P(|X_n -a| > \epsilon) \to 0$, for a positive $a$, we have $\lim_{n\to\infty} P(|X_n -a | > \epsilon\sqrt{a}) \to 0$ as well.
+    Therefore, $Y_n = \sqrt{X_n} \stackrel{p}{\rightarrow} \sqrt{a}$.
+
+    For $Y_i' = a/X_i$, and $a > 0$, 
+    \begin{align*}
+    P(|a/X_n - 1| > \epsilon) & = P(a/X_n > 1 + \epsilon) + P(a/X_n < 1 - \epsilon) \\
+    & = P(\frac{X_n}{a} < \frac{1}{1+\epsilon}) + P(\frac{X_n}{a} > \frac{1}{1-\epsilon}) \\
+    & = P(X_n < \frac{a}{1+\epsilon}) + P(X_n > \frac{a}{1-\epsilon}) \\
+    & = P(X_n < a - \frac{a\epsilon}{1+\epsilon}) + P(X_n > a + \frac{a\epsilon}{1-\epsilon}) \ge P(X_n < a - \frac{a\epsilon}{1+\epsilon}) + P(X_n > a + \frac{a\epsilon}{1+\epsilon})   \\
+    & = P(|X_n - a| > \frac{a\epsilon}{1+\epsilon})
+    \end{align*}
+
+    Since $\forall \epsilon > 0$, $\epsilon/(1+\epsilon) < \epsilon$. Given $\lim_{n\to\infty} P(|X_n - a| > \epsilon) \to 0$, we will have $P(|X_n - a| > \frac{a\epsilon}{1+\epsilon}) \to 0$, as $n\to\infty$ as well.
+
+    So, $Y_n' = a/X_n \stackrel{p}{\rightarrow} 1.$
+    
+    \item Given the conclusion in Example 5.5.18, that $S_n^2 \stackrel{p}{\rightarrow} \sigma^2$, we can apply the first result in part (a), that, 
+    \[
+    \sqrt{S_n^2} = S_n \stackrel{p}{\rightarrow} \sigma
+    \]
+
+    Then apply the second result, given $S_n \to \sigma, \text{as}~ n\to\infty$, we have 
+    \[
+    \sigma/S_n \stackrel{p}{\rightarrow} 1.
+    \]
+    \end{enumerate}
+    
+    \section*{5.33}
+    Since for any finite $c > 0$, $\lim_{n\to\infty} P(Y_c > c) = 1$,
+    then for any $\epsilon > 0$, $P(Y_c - c > \epsilon) \to 1$.
+
+    So, given that $X_n$ converges to random variable $X$ in distribution, if we denote the cdf of $X$ as $F_X$, then,
+    \[
+    \lim_{n\to\infty} P(X_n + Y_n > c) = \lim_{n\to\infty} P(X_n > c - Y_n)  \ge 1 - F_X(-\epsilon) = 1 - 0 = 1, \forall \epsilon > 0
+    \]
+
+    So $\lim_{n\to\infty} P(X_n + Y_n > c) \to 1$.
+    
+    \section*{5.41}
+    \begin{enumerate}[(a)]
+    \item Set $\epsilon = |x-\mu|$. If $x > \mu$,
+    \[
+    P(|X_n - \mu| \le \epsilon) = P(|X_n - \mu| \le x-\mu) = P(\mu-x \le X_n-\mu \le x-\mu) = P(X\le x) - P(X \le 2\mu-x), 
+    \]
+    (note that $x > \mu \Rightarrow x > 2\mu-x$).
+
+    So,
+    \[
+    P(X_n \le x) \ge P(|X_n -\mu| \le \epsilon) \to 1, \text{as}~ n \to \infty, \forall \epsilon > 0, x > \mu.
+    \]
+    Hence, $P(X_n \le x) \to 1, \text{if}~ x > \mu$.
+
+    Similarly, if $x < \mu$, let $\epsilon = |x-\mu|$,
+    \[
+    P(|X_n - \mu| \ge \epsilon) = P(|X_n - \mu| \ge \mu -x) = P(Xn-\mu \le x-\mu) + P(X_n - \mu \ge \mu - x) \ge P(X_n \le x)
+    \]
+    Therefore,
+    \[
+    P(X_n \le x) \le P(|X_n - \mu| \ge \epsilon) \to 0, \text{as}~ n \to \infty, \forall \epsilon > 0, x < \mu
+    \]
+
+    Overall,
+    \[
+    P(X \le x) \to \begin{cases}
+    0 & \text{if}~ x < \mu \\
+    1 & \text{if}~ x > \mu
+    \end{cases}
+    \]
+
+    \item For $\forall \epsilon > 0$,
+    \[
+    \{x: |x-\mu| > \epsilon\} = \{x: x - \mu > \epsilon\} \cup \{x: x - \mu < -\epsilon\}
+    \]
+
+    If $x$ is on sample space $\{x:x-\mu < -\epsilon\} = \{x: x < \mu - \epsilon\}$, 
+    \[
+    P(X_n \le x) = P(X_n < \mu - \epsilon) = P(|X_n - \mu| > \epsilon) \to 0, \text{as}~ n \to \infty, x < \mu
+    \]
+
+    Similarly, for $x$ on $\{x: x-\mu > \epsilon\} = \{x: x > \mu + \epsilon\}$,
+    \[
+    P(X_n \ge x) = P(X_n > \mu + \epsilon) = P(|X_n - \mu| > \epsilon) \to 0, \text{as}~ n \to \infty, x > \mu
+    \]
+
+    So, for $\forall \epsilon > 0$, and for $\forall x \in \{x: |x-\mu| > \epsilon\}$, if following convergence holds,
+    \[
+    P(X \le x) \to \begin{cases}
+    0 & \text{if}~ x < \mu \\
+    1 & \text{if}~ x > \mu
+    \end{cases}
+    \]
+    we have, $P(|X_n - \mu| > \epsilon) \to 0, \text{as}~ n \to \infty$.
+
+    \end{enumerate}
+    \[
+    P(|X_n - \mu| > \epsilon) \to 0, \text{for every}~\epsilon \iff P(X_n \le x) \to \begin{cases}
+    0 & \text{if}~ x < \mu \\
+    1 & \text{if}~ x > \mu
+    \end{cases}
+    \]
+\end{document}

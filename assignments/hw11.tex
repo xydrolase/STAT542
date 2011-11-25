@@ -1,0 +1,174 @@
+\documentclass[letterpaper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath, amssymb}
+\usepackage{enumerate}
+\usepackage{fancyhdr}
+
+\pagestyle{fancy}
+\fancyhead[L]{STAT 542 HW11}
+\fancyhead[R]{Xin Yin}
+
+\newcommand{\intii}{\int_{-\infty}^\infty}
+\newcommand{\Xone}{X_{(1)}}
+\newcommand{\Xn}{X_{(n)}}
+\newcommand{\sumi}{\sum_{i=1}^n}
+\newcommand{\sumj}{\sum_{j=1}^n}
+\newcommand{\intzi}{\int_0^\infty}
+\renewcommand{\arraystretch}{1.5}
+
+\begin{document}
+\section*{5.34}
+\begin{align*}
+E\frac{\sqrt{n} (\bar X_n - \mu)}{\sigma} = \frac{\sqrt{n}}{\sigma} E(\bar X_n - \mu) = \frac{\sqrt{n}}{\sigma} \mu - \mu = 0 \\
+Var \frac{\sqrt{n} (\bar X_n - \mu)}{\sigma} = \frac{n}{\sigma^2} Var (\bar X_n - \mu) = \frac{n}{\sigma^2} \frac{\sigma^2}{n} = 1
+\end{align*}
+\section*{5.35}
+\begin{enumerate}[(a)]
+\item Given that $X_i \sim \text{exp}(1)$, $EX_i = 1, VarX_i = 1$. So, using CLT, we know that,
+\[
+\frac{\bar X_n -1}{1/\sqrt{n}} \to N(0, 1)
+\]
+\emph{i.e.}, $\frac{\bar X_n -1}{1/\sqrt{n}} \stackrel{d}{\to} Z$, where $Z$ is a standard normal random variable.
+
+Therefore,
+\[
+P(\frac{\bar X_n -1}{1/\sqrt{n}} \le x) \to P(Z \le x)
+\]
+\item 
+As $\sqrt{n}(\bar X_n - 1)$ converges to $Z$, it really is the cdf that converges. So,
+\begin{align*}
+lhs: & \\
+\frac{d}{dx} P(\frac{\bar X_n - 1}{1/\sqrt{n}} \le x) & = \frac{d}{dx}P(\bar X_n \frac{x}{\sqrt{n}}+1) = \frac{d}{dx} P(S_n \le x\sqrt{n} + n)\\
+& \text{Notice that}~S_n = \sum_{i=1}^n X_i \sim \text{Gamma}(n, 1)\\
+& = \frac{d}{dx} F_{S_n}(x\sqrt{n} + n) = \sqrt{n} f_{S_n}(x\sqrt{n}+n) \\
+& = \frac{\sqrt{n}}{\Gamma{n}1^n} (x\sqrt{n}+n)^{n-1} e^{-(x\sqrt{n}+n)/1} \\
+& = \frac{\sqrt{n}}{\Gamma{n}} (x\sqrt{n}+n)^{n-1} e^{-(x\sqrt{n}+n)}\\
+\\
+rhs: & \\
+\frac{d}{dx} P(Z \le x) & = \frac{d}{dx} F_Z(x) = f_Z(x) \\
+& = \frac{1}{\sqrt{2\pi}} e^{-x^2/2}
+\end{align*}
+Hence, 
+\[
+\frac{\sqrt{n}}{\Gamma{n}} (x\sqrt{n}+n)^{n-1} e^{-(x\sqrt{n}+n)} \approx \frac{1}{\sqrt{2\pi}} e^{-x^2/2}
+\]
+Let $x = 0$ and notice that $\Gamma{n} = (n-1)!$ for integer $n$, we have,
+\[
+\frac{\sqrt{n}}{(n-1)!} n^{n-1} e^{-n} \approx \frac{1}{\sqrt{2\pi}}
+\]
+Rearrange term and multiply both sides with $n$, we will get,
+\[
+n! \approx \sqrt{2\pi} n^{n+1/2} e^{-n},
+\]
+which is the Stirling's formula.
+\end{enumerate}
+\section*{5.36}
+\begin{enumerate}[(a)]
+\item Since $Y|N \sim \chi^2_{2n}, \quad N \sim \text{Poisson}(\theta)$, we have $E(Y|N) = 2N, Var(Y|N) = 4N, \quad EN = Var N = \theta$
+\[
+EY = E(E(Y|N)) = E(2N) = 2\theta
+\]
+\[
+Var Y = E(Var(Y|N)) + Var(E(Y|N)) = E(4N) + Var(2N) = 8\theta
+\]
+\item The mgf of random variable $Y$ is, $M_Y(t) = Ee^{tY}$. Using the formula that $Eg(Y) = E(E(g(Y)|N))$, given that $g(Y) = e^{tY}$, we have,
+\[
+M_Y(t) = Ee^{tY} = E(E(e^{tY}|N)),
+\]
+where $E(e^{tY}|N)$ is the mgf of $Y|N$, which is the mgf for $\chi^2_{2n}$, \emph{i.e.}, $M_{Y|N}(t) = E(e^{tY}|N) = \left(\frac{1}{1-2t} \right)^N$. Therefore,
+\begin{align*}
+M_Y(t) & = E(E(e^{tY}|N)) = E\left(\frac{1}{1-2t}\right)^N \\
+& = \sum_{n=0}^n \left(\frac{1}{1-2t}\right)^n \frac{e^{-\theta} \theta^n}{n!} = e^{-\theta}\sum_{n=0}^n \frac{\left(\frac{\theta}{1-2t}\right)^n}{n!} \\
+& = e^{-\theta} e^{\frac{\theta}{1-2t}} = e^{\frac{2t\theta}{1-2t}}
+\end{align*}
+
+Now, the mgf of $(Y-EY)/\sqrt{VarY}$ is, if we let $U = (Y-EY)/\sqrt{VarY} = \frac{Y}{\sqrt{8\theta}} - \frac{\sqrt{\theta}}{\sqrt{2}}$,
+\begin{align*}
+M_U(t) & = e^{-\frac{\sqrt{\theta}}{\sqrt{2}}t} M_Y(\frac{t}{\sqrt{8\theta}}) \\
+& = e^{-\frac{2\theta}{\sqrt{8\theta}}t} e^{\frac{\theta t}{\sqrt{2\theta} - t}} = e^{\frac{t^2}{2-t\sqrt{2/\theta}}} \\
+\end{align*}
+Since $\lim_{\theta \to \infty} e^{\frac{t^2}{2-t\sqrt{2/\theta}}} & = e^{\frac{t^2}{2}}$ is the mgf for standard normal distribution, we have that,
+\[
+(Y-EY)/sqrt{VarY} \stackrel{d}{\to} N(0, 1)$
+\]
+
+\end{enumerate}
+\section*{5.38}
+\begin{enumerate}[(a)]
+\item Let random variable $W = S_n - a$, we can see that, $e^{-at}[M_X(t)]^n = e^{-at}M_{S_n}(t) = M_{S_n - a}(t) = M_W(t)$. Using the definition of mgf, we have,
+\[
+M_W(t) = \intii e^{tw} f_W(w) dw \ge \int_{w: w >0} e^{tw} f_W(w) dw
+\]
+Since mgf exists for $-h < t < h$, for $0 < t < h, \quad w > 0$ guarantee that $e^{tw} > 1$, therefore,
+\begin{align*}
+M_W(t) & = \intii e^{tw} f_W(w) dw \ge \int_{w: w >0} e^{tw} f_W(w) dw \\
+ & \ge \int_{w: w>0} f_W(w) dw, \quad 0 < t < h \\
+ & = P(W > 0) = P(S_n > a), \quad 0 < t < h
+\end{align*}
+Hence, $P(S_n > a) \le e^{-at}[M_X(t)]^n$.
+
+Similarly,
+\begin{align*}
+M_W(t) & = \intii e^{tw} f_W(w) dw \ge \int_{w: w \le 0} e^{tw} f_W(w) dw \\
+ & \ge \int_{w: w \le 0} f_W(w) dw, \quad -h < t < 0 \\
+ & = P(W \le 0) = P(S_n \le a), \quad -h < t < 0
+\end{align*}
+which implies, $P(S_n \le a) \le e^{-at}[M_X(t)]^n$.
+\item 
+\end{enumerate}
+\section*{5.42}
+\begin{enumerate}[(a)]
+\item First we look at $P(n^{\upsilon}(1-X_i) \le x)$, which is,
+\begin{align*}
+P(n^{\upsilon}(1-X_i) \le x) & = P(X_i \ge 1 - \frac{x}{n^\upsilon}) = 1-\int_0^1 \frac{\Gamma(1+\beta)}{\Gamma{1}\Gamma{1+\beta}} \left(1-\frac{x}{n^\upsilon}\right)^0 \left(\frac{x}{n^\upsilon})^{\beta-1} \\
+& = 1 - x^\beta n^{-\beta\upsilon} 
+\end{align*}
+So, 
+\[
+P(n^{\upsilon}(1-\Xn) \le x) = P(\Xn \ge 1 - \frac{x}{n^\upsilon}) = (1- x^\beta n^{-\beta\upsilon})^n
+\]
+One way to let above expression to converge, is to find $\upsilon$ such that above expression can be written as $(1-\frac{x^\beta}{n})^n \to e^{-x^\beta}$, as $n\to\infty$. And we can easily identify that $\upsilon = \frac{1}{\beta}$.
+\item Since $X_i \sim \text{Exp}(1)$,
+\[
+P(X_i - a_n \le x) = P(X_i \le x + a_n) = 1 - e^{-(x+a_n)} = 1 - \frac{e^{-x}}{e^{a_n}}
+\]
+Then,
+\[
+P(\Xn - a_n \le x) = P(\Xn \le x + a_n) = \left(1-\frac{e^{-x}}{e^{a_n}}\right)^n
+\]
+As we can see, if we set $a_n = \log(n)$, above expression can be written as $\left(1-\frac{e^{-x}}{n}\right)^n \to e^{-e^{-x}}$, as $n \to \infty$.
+\end{enumerate}
+\section*{5.43}
+\begin{enumerate}[(a)]
+\item We can check that,
+\[
+P(|Y_n - \mu| < \epsilon) = P(|\sqrt{n}(Y_n - \mu)| < \sqrt{n} \epsilon).
+\]
+Since $\sqrt{n}(Y_n - \mu) \to Z$ where $Z \sim N(0, \sigma^2)$, 
+\[
+\lim_{n\to\infty} P(|\sqrt{n}(Y_n - \mu)| < \sqrt{n} \epsilon) = P(|Z| < \infty) = 1
+\]
+Therefore, $\lim_{n\to\infty} P(|Y_n - \theta| < \epsilon) = 1$, \emph{i.e.}, $Y_n \stackrel{p}{\to} \mu$.
+\item In the context of proof of Theorem 5.5.24, since we already know that $\sqrt{n}(Y_n - \theta) \stackrel{d}{\to} N(0, \sigma^2)$, using Slutsky's theorem, $g'(\theta)\sqrt{n}(Y_n - \theta) \stackrel{d}{\to} g'(\theta) Z$ where $Z \sim N(0, \sigma^2)$. 
+
+Therefore, $\sqrt{n}(g(Y_n) - g(\theta)) = g'(\theta)\sqrt{n}(Y_n - \theta) \stackrel{d}{\to} N(0, \sigma^2[g'(\theta)]^2)$.
+\end{enumerate}
+
+\section*{5.44}
+\begin{enumerate}[(a)]
+\item Since $X_i \stackrel{iid}{\sim} \text{Ber}(p), \mu_{X_i} = p, \sigma_{X_i}^2 = p(1-p)$. Then, using CLT, we know that, for sample mean $Y_n = \frac{1}{n} \sum_{i=1}^n X_i$, it satisfies,
+\[
+\sqrt{n}(Y_n - p) = \sqrt{n}(Y_n - \mu_{X_i}) \stackrel{d}{\to} N(0, \sigma^2_{X_i}) = N(0, p(1-p))
+\]
+\item Define $g(x) = x(1-x)$. Then, $g(Y_n) = Y_n(1-Y_n), \quad g(\mu_{X_i}) = \mu_{X_i} (1-\mu_{X_i}) = p(1-p)$. 
+Since $p \ne 1/2$, $g'(\mu_{X_i}) = (1-p) - p = 1-2p$ exists and is not 0. And we can use delta method to show that,
+\[
+\sqrt{n}(g(Y_n) - g(\mu_{X_i}) = \sqrt{n}(Y_n(1-Y_n) - p(1-p)) \stackrel{d}{\to} N(0, \sigma_{X_i}^2 [g'(\mu_{X_i})]^2) = N(0, p(1-p) (1-2p)^2)
+\]
+
+\item If $p = 1/2$, $\sigma_{X_i}^2 = p(1-p) = \frac{1}{4}$. Notice that $g'(\mu_{X_i} 1-2p = 0$, we can then use second-order delta method to show that,
+\[
+n[g(Y_n) - g(\mu_{X_i})] = n(Y_n(1-Y_n) - \frac{1}{4}) \stackrel{d}{\to} \sigma^2_{X_i} \chi_1^2 = \frac{1}{4} \chi_1^2.
+\]
+\end{enumerate}
+\end{document}
