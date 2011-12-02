@@ -1,0 +1,97 @@
+\documentclass[letterpaper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath, amssymb}
+\usepackage{enumerate}
+\usepackage{fancyhdr}
+
+\pagestyle{fancy}
+\fancyhead[L]{STAT 542 HW12}
+\fancyhead[R]{Xin Yin}
+
+\newcommand{\intii}{\int_{-\infty}^\infty}
+\newcommand{\intzi}{\int_0^\infty}
+\newcommand{\convp}{\stackrel{p}{\to}}
+\newcommand{\convd}{\stackrel{d}{\to}}
+\newcommand{\IID}{\stackrel{iid}{\sim}}
+\newcommand{\ninv}{n^{-1}}
+\newcommand{\sumn}[1]{\sum_{#1=1}^n}
+\newcommand{\smpmean}[1]{\cfrac{\sum_{i=1}^n #1}{n}}
+\newcommand{\bZ}{\mathbf{Z}}
+\renewcommand{\arraystretch}{1.5}
+
+\begin{document}
+\section*{Q1}
+\begin{enumerate}
+\item Since $X_1, \dots, X_n \IID \text{Poisson}(\lambda)$, by law of large numbers, $\bar X_n \convp EX_i = \lambda$.
+Define $g(x) = xe^{-x}$, and obviously $g(x)$ is a continuous function. So, by mapping theorem, we have,
+\[
+g(\bar X_n) = \bar X_n e^{-\bar X_n} \convp g(\lambda) = \lambda e^{-\lambda},
+\]
+\emph{i.e.} $\hat \eta_n \convp \eta$.
+\item Since $X_1, \dots, X_n \IID \text{Poisson}(\lambda)$, using CLT, we know that, $\sqrt{n}(\bar X_n - \lambda) \convd N(0, \lambda)$, as $Var(X_i) = \lambda$. 
+Given the function $g$ we defined in previous question, using delta method, we have that,
+\[
+\sqrt{n}\left[ g(\bar X_n) - g(\lambda) \right] \convd N(0, \lambda [g'(\lambda)]^2)
+\]
+where 
+\[
+g'(\lambda) = \left. \frac{d}{dx} xe^{-x} \right|_{x =\lambda} = e^{-\lambda} - \lambda e^{-\lambda} = (1-\lambda) e^{-\lambda}.
+\]
+
+Therefore, 
+\[
+\sqrt{n}[\hat \eta_n - \eta] = \sqrt{n}\left[ g(\bar X_n) - g(\lambda) \right] \convd N(0, \lambda (1-\lambda)^2 e^{-2\lambda}),
+\]
+\emph{i.e.}, $\hat \eta_n$ is $AN(\lambda e^{-\lambda}, \lambda (1-\lambda)^2 e^{-2\lambda})$
+\end{enumerate}
+\section*{Q2}
+\begin{enumerate}
+\item The pearson correlation coefficient is defined as,
+\[
+\rho_{X, Y} = \frac{Cov(X, Y)}{\sqrt{Var(X) Var(Y)}} = \frac{EXY - EXEY}{\sqrt{(EX^2 - (EX)^2)(EY^2 - (EY)^2)}}
+\]
+By plug-in, we can write down the sample pearson correlation coefficient as,
+\[
+\hat \rho = \frac{\smpmean{X_i Y_i} - \smpmean{X_i} \smpmean{Y_i}}{\sqrt{\left[\smpmean{X_i^2}-\left(\smpmean{X_i}\right)^2\right]\left[\smpmean{Y_i^2} - \left(\smpmean{Y_i}\right)^2\right]}}
+\]
+
+Given that $(X_1, Y_1), \dots, (X_n, Y_n) \IID F$, if we define iid random vector $\bZ_i = (X_i, Y_i, X_i^2, Y_i^2, X_i Y_i)$, we can show that, by using law of large number, 
+\[
+\bar \bZ_n^T = (\smpmean{X_i}, \smpmean{Y_i}, \smpmean{X_i^2}, \smpmean{Y_i^2}, \smpmean{X_i Y_i})^T \convp (EX, EY, EX^2, EY^2, EXY)^T
+\]
+
+Now define a function $g(x_1, x_2, x_3, x_4, x_5) = \cfrac{x_5 - x_1 x_2}{\sqrt{(x_3 - x_1^2)(x_4 - x_2^2)}}$, we can easily see that,
+\begin{eqnarray*}
+\rho = g(EX, EY, EX^2, EY^2, EXY) \\
+\hat \rho = g(\bar \bZ_n) = g(\smpmean{X_i}, \smpmean{Y_i}, \smpmean{X_i^2}, \smpmean{Y_i^2}, \smpmean{X_i Y_i})
+\end{eqnarray*}
+Since $g$ is a continuous function, using mapping theorem, we have that,
+\[
+\hat \rho \convp \rho
+\]
+\item
+We first try to work out the $D$ matrix, which is $\left. \frac{\partial g(\mathbf{x})}{\partial \mathbf{x}} \right|_{\mathbf{x} = \mathbf{\mu}}$.
+\[
+D = \left. \frac{\partial g(\mathbf{x})}{\partial \mathbf{x}} \right|_{\mathbf{x} = \mathbf{\mu}} = \begin{pmatrix}
+\frac{\frac{2 \mu_X \sigma_Y}{\sigma_X} (\mu_{XY} - \mu_X \mu_Y)}{\sigma_X^2\sigma^2_Y} \\
+\frac{\frac{2 \mu_Y \sigma_X}{\sigma_Y} (\mu_{XY} - \mu_X \mu_Y)}{\sigma_X^2\sigma^2_Y} \\
+-\frac{\mu_{XY} - \mu_X \mu_Y}{2\sigma_X^3 \sigma_Y}\\
+-\frac{\mu_{XY} - \mu_X \mu_Y}{2\sigma_X \sigma_Y^3}\\
+\frac{1}{\sigma_X \sigma_Y}
+\end{pmatrix}^T
+\]
+The variance-covariance matrix $\Sigma$ for random vector $\bZ_i$, is,
+\[
+\Sigma = \begin{pmatrix}
+Var(X_i) & Cov(X_i, Y_i) & Cov(X_i, X_i^2) & Cov(X_i, Y_i^2) & Cov(X_i, X_i Y_i) \\
+Cov(X_i, Y_i) & Var(Y_i) & Cov(Y_i, X_i^2) & Cov(Y_i, Y_i^2) & Cov(Y_i, X_i Y_i)\\
+Cov(X_i, X_i^2) & Cov(Y_i, X_i^2) & Var(X_i^2) & Cov(X_i^2, Y_i^2) & Cov(X_i^2, X_i Y_i) \\
+Cov(X_i, Y_i^2) & Cov(Y_i, Y_i^2) & Cov(X_i^2, Y_i^2) & Var(Y_i^4) & Cov(X_i^2, X_i Y_i) \\
+Cov(X_i, X_i Y_i) & Cov(Y_i, X_i Y_i) & Cov(X_i^2, X_i Y_i) & Cov(Y_i^2, X_i Y_i) & Var(X_i Y_i) \\
+\end{pmatrix}
+\]
+This matrix exists since the fourth moment of $F$ exists.
+
+So, the asymptotic variance of $\hat \rho$ is $D\Sigma D^T$, where $D$ and $\Sigma$ are matrices stated above.
+\end{enumerate}
+\end{document}
