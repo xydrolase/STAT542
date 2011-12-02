@@ -9,14 +9,30 @@
 \fancyhead[R]{Xin Yin}
 
 \newcommand{\intii}{\int_{-\infty}^\infty}
-\newcommand{\Xone}{X_{(1)}}
 \newcommand{\Xn}{X_{(n)}}
-\newcommand{\sumi}{\sum_{i=1}^n}
-\newcommand{\sumj}{\sum_{j=1}^n}
 \newcommand{\intzi}{\int_0^\infty}
 \renewcommand{\arraystretch}{1.5}
 
 \begin{document}
+\section*{5.13}
+Since $\frac{(n-1)S^2}{\sigma^2} \sim \chi^2_{n-1}$, we can write $Eg(S^2)$ as $Eg(\frac{\sigma^2}{n-1} \frac{(n-1)S^2}{\sigma^2})$. If we start with $g(s^2) = c\sqrt{s^2}$, we will have,
+\begin{align*}
+Eg(S^2) & = E(c\sqrt{\frac{\sigma^2}{n-1} \frac{(n-1)S^2}{\sigma^2}}) \\
+& = c \sqrt{\frac{\sigma^2}{n-1}} E\sqrt{\frac{(n-1)S^2}{\sigma^2}} \\
+\end{align*}
+Let $X = \frac{(n-1)s^2}{\sigma^2}$, then $X \sim \chi^2_{n-1}$. Then $E\sqrt{\frac{(n-1)S^2}{\sigma^2}}$ can be written as $E\sqrt{X}$, which is,
+\begin{align*}
+E\sqrt{X} & = \intzi \sqrt{x} \frac{1}{\Gamma(\frac{n-1}{2})2^{\frac{n-1}{2}}} x^{\frac{n-1}{2} - 1} e^{-\frac{x}{2}} dx \\
+& = \frac{\Gamma(\frac{n}{2})}{\Gamma(\frac{n-1}{2}) \sqrt{2}} \intzi \frac{1}{\Gamma(\frac{n}{2}) 2^{\frac{n-1}{2}}} x^{\frac{n}{2} - 1} e^{-\frac{x}{2}} dx 
+& = \frac{\Gamma(\frac{n}{2})\sqrt{2}}{\Gamma(\frac{n-1}{2})}
+\end{align*}
+
+So,
+\begin{align*}
+Eg(S^2) & = \frac{\Gamma(\frac{n}{2})\sqrt{2}}{\Gamma(\frac{n-1}{2})} c \sqrt{\frac{1}{n-1}} \sigma = \sigma  \\
+\iff & c = \sqrt{\frac{n-1}{2}} \frac{\Gamma(\frac{n-1}{2})}{\Gamma(\frac{n}{2})}
+\end{align*}
+
 \section*{5.34}
 \begin{align*}
 E\frac{\sqrt{n} (\bar X_n - \mu)}{\sigma} = \frac{\sqrt{n}}{\sigma} E(\bar X_n - \mu) = \frac{\sqrt{n}}{\sigma} \mu - \mu = 0 \\
@@ -24,7 +40,7 @@ Var \frac{\sqrt{n} (\bar X_n - \mu)}{\sigma} = \frac{n}{\sigma^2} Var (\bar X_n 
 \end{align*}
 \section*{5.35}
 \begin{enumerate}[(a)]
-\item Given that $X_i \sim \text{exp}(1)$, $EX_i = 1, VarX_i = 1$. So, using CLT, we know that,
+\item Given that $X_i \sim \text{Exp}(1)$, $EX_i = 1, VarX_i = 1$. So, using CLT, we know that,
 \[
 \frac{\bar X_n -1}{1/\sqrt{n}} \to N(0, 1)
 \]
@@ -41,8 +57,8 @@ lhs: & \\
 \frac{d}{dx} P(\frac{\bar X_n - 1}{1/\sqrt{n}} \le x) & = \frac{d}{dx}P(\bar X_n \frac{x}{\sqrt{n}}+1) = \frac{d}{dx} P(S_n \le x\sqrt{n} + n)\\
 & \text{Notice that}~S_n = \sum_{i=1}^n X_i \sim \text{Gamma}(n, 1)\\
 & = \frac{d}{dx} F_{S_n}(x\sqrt{n} + n) = \sqrt{n} f_{S_n}(x\sqrt{n}+n) \\
-& = \frac{\sqrt{n}}{\Gamma{n}1^n} (x\sqrt{n}+n)^{n-1} e^{-(x\sqrt{n}+n)/1} \\
-& = \frac{\sqrt{n}}{\Gamma{n}} (x\sqrt{n}+n)^{n-1} e^{-(x\sqrt{n}+n)}\\
+& = \frac{\sqrt{n}}{\Gamma(n)1^n} (x\sqrt{n}+n)^{n-1} e^{-(x\sqrt{n}+n)/1} \\
+& = \frac{\sqrt{n}}{\Gamma(n)} (x\sqrt{n}+n)^{n-1} e^{-(x\sqrt{n}+n)}\\
 \\
 rhs: & \\
 \frac{d}{dx} P(Z \le x) & = \frac{d}{dx} F_Z(x) = f_Z(x) \\
@@ -50,9 +66,9 @@ rhs: & \\
 \end{align*}
 Hence, 
 \[
-\frac{\sqrt{n}}{\Gamma{n}} (x\sqrt{n}+n)^{n-1} e^{-(x\sqrt{n}+n)} \approx \frac{1}{\sqrt{2\pi}} e^{-x^2/2}
+\frac{\sqrt{n}}{\Gamma(n)} (x\sqrt{n}+n)^{n-1} e^{-(x\sqrt{n}+n)} \approx \frac{1}{\sqrt{2\pi}} e^{-x^2/2}
 \]
-Let $x = 0$ and notice that $\Gamma{n} = (n-1)!$ for integer $n$, we have,
+Let $x = 0$ and notice that $\Gamma(n) = (n-1)!$ for integer $n$, we have,
 \[
 \frac{\sqrt{n}}{(n-1)!} n^{n-1} e^{-n} \approx \frac{1}{\sqrt{2\pi}}
 \]
@@ -87,9 +103,9 @@ Now, the mgf of $(Y-EY)/\sqrt{VarY}$ is, if we let $U = (Y-EY)/\sqrt{VarY} = \fr
 M_U(t) & = e^{-\frac{\sqrt{\theta}}{\sqrt{2}}t} M_Y(\frac{t}{\sqrt{8\theta}}) \\
 & = e^{-\frac{2\theta}{\sqrt{8\theta}}t} e^{\frac{\theta t}{\sqrt{2\theta} - t}} = e^{\frac{t^2}{2-t\sqrt{2/\theta}}} \\
 \end{align*}
-Since $\lim_{\theta \to \infty} e^{\frac{t^2}{2-t\sqrt{2/\theta}}} & = e^{\frac{t^2}{2}}$ is the mgf for standard normal distribution, we have that,
+Since $\lim_{\theta \to \infty} e^{\frac{t^2}{2-t\sqrt{2/\theta}}} = e^{\frac{t^2}{2}}$ is the mgf for standard normal distribution, we have that,
 \[
-(Y-EY)/sqrt{VarY} \stackrel{d}{\to} N(0, 1)$
+(Y-EY)/sqrt{VarY} \stackrel{d}{\to} N(0, 1)
 \]
 
 \end{enumerate}
@@ -115,12 +131,47 @@ M_W(t) & = \intii e^{tw} f_W(w) dw \ge \int_{w: w \le 0} e^{tw} f_W(w) dw \\
 \end{align*}
 which implies, $P(S_n \le a) \le e^{-at}[M_X(t)]^n$.
 \item 
+Given that $M_X(0) = 1$, $M_X'(0) = E(X) < 0$, we have,
+\[
+\lim_{t\to 0}\frac{M_X(t) - M_X(0)}{t-0} = \lim_{t \to 0}M_X'(t) = E(X) < 0
+\]
+So, $M_X(t) = M_X(0) + tE(X) = 1 + tE(X) < 1$, given that $E(X) < 0$. 
+Then, let $c = 1 + tE(X), 0 < c < 1$, 
+\[
+P(S_n > a) \le e^{-at}[M_X(t)]^n = e^{-at}c^n
+\]
+For $a > 0, e^{-at} < 1$, therefore for $n$ large enough, there exists $0 < c<1$, such that,
+\[
+P(S_n > a) \le c^n
+\]
+
+Similarly, for $P(S_n \le a)$, we will have $P(S_n \le a) \le c^n$, for some $0 < c <1$, when $E(X) > 0$, as $t < 0$ in this case.
+
+\item $\sum_{i=1}^n Y_i = \sum_{i=1}^n (X_i - \mu - \epsilon) = S_n - n\mu - n\epsilon$. So, using above argument, with $a = 0$, we have,
+\[
+P(\sum_{i=1}^n Y_i > a) = P(S_n - n\mu - n\epsilon > 0) = P(S_n - n\mu > n\epsilon) = P(\bar X_n - \mu > \epsilon) \le c^n,
+\]
+where c is a constant satisfying that $0<c<1$.
+\item Now set $Y_i = -X_i + \mu - \epsilon$, so $\sum_{i=1}^n Y_i = -S_n + n\mu - n\epsilon$. Using the result from (b), with $a = 0$, we have,
+\[
+P(\sum_{i=1}^n Y_i > a) = P(-\bar X_n + \mu > \epsilon) \le c^n.
+\]
+
+Now assume that $P(-\bar X_n + \mu > \epsilon) \le c_1^n$, $P(\bar X_n - \mu > \epsilon) \le c_2^n$, we can see that,
+\[
+P(|\bar X_n - \mu| > \epsilon) = P(-\bar X_n + \mu > \epsilon) + P(\bar X_n - \mu > \epsilon) \le c_1^n + c_2^n \le 2 [\max\{c_1, c_2\}]^n
+\]
+So, just set $\forall c = [\max\{c_1, c_2\}, 1)$, which still satisfies $0 < c < 1$, then we have,
+\[
+P(|\bar X_n - \mu| > \epsilon) < 2c^n, \text{for some}~0 < c < 1.
+\]
+
 \end{enumerate}
 \section*{5.42}
 \begin{enumerate}[(a)]
 \item First we look at $P(n^{\upsilon}(1-X_i) \le x)$, which is,
 \begin{align*}
-P(n^{\upsilon}(1-X_i) \le x) & = P(X_i \ge 1 - \frac{x}{n^\upsilon}) = 1-\int_0^1 \frac{\Gamma(1+\beta)}{\Gamma{1}\Gamma{1+\beta}} \left(1-\frac{x}{n^\upsilon}\right)^0 \left(\frac{x}{n^\upsilon})^{\beta-1} \\
+P(n^{\upsilon}(1-X_i) \le x) & = P(X_i \ge 1 - \frac{x}{n^\upsilon}) = 1-\int_0^1 \frac{\Gamma(1+\beta)}{\Gamma(1)\Gamma(1+\beta)} \left(1-\frac{x}{n^\upsilon}\right)^0 \left(\frac{x}{n^\upsilon}\right)^{\beta-1} \\
 & = 1 - x^\beta n^{-\beta\upsilon} 
 \end{align*}
 So, 
