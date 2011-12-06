@@ -45,6 +45,19 @@ Therefore,
 \sqrt{n}[\hat \eta_n - \eta] = \sqrt{n}\left[ g(\bar X_n) - g(\lambda) \right] \convd N(0, \lambda (1-\lambda)^2 e^{-2\lambda}),
 \]
 \emph{i.e.}, $\hat \eta_n$ is $AN(\lambda e^{-\lambda}, \lambda (1-\lambda)^2 e^{-2\lambda})$
+\item
+Using a second-order Taylor expansion, we have,
+\[
+E(\hat \eta_n) = E(g(\bar X_n)) = g(\mu) + \frac{1}{2} g''(\mu) \frac{\sigma^2}{n} = g(\lambda) + \frac{1}{2} g''(\lambda) \frac{\lambda}{n}
+\]
+Since $g(\lambda) = \lambda e^{-\lambda}, g''(\lambda) = \lambda e^{-\lambda} - 2e^{-\lambda}$, we can approximate mean of $\hat \eta_n$ as,
+\[
+E(\hat \eta_n) = \lambda e^{-\lambda} + \frac{\lambda e^{-\lambda}(\lambda -2)}{n}
+\]
+Also,
+\[
+Var(\hat \eta_n) = Var(g(\bar X_n)) = [g'(\mu)]^2 \frac{\sigma^2}{n} = \frac{\lambda}{n} (1-\lambda)^2 e^{-2\lambda}
+\]
 \end{enumerate}
 \section*{Q2}
 \begin{enumerate}
@@ -95,6 +108,7 @@ Cov(X_i, X_i Y_i) & Cov(Y_i, X_i Y_i) & Cov(X_i^2, X_i Y_i) & Cov(Y_i^2, X_i Y_i
 This matrix exists since the fourth moment of $F$ exists.
 
 So, the asymptotic variance of $\hat \rho$ is $D\Sigma D^T$, where $D$ and $\Sigma$ are matrices stated above.
+And of course, the asymptotic mean for $\hat \rho_n$ is $\rho$, as $\hat \rho_n \convp \rho$ when $n \to \infty$.
 \end{enumerate}
 
 \section*{5.15}
@@ -243,7 +257,23 @@ Since for the part $\frac{1}{(1+t^2/p)^{(p+1)/2}}$,
 \[
 \lim_{p \to \infty} \frac{1}{(1+t^2/p)^{(p+1)/2}} = \lim_{p \to \infty} \frac{1}{\left(\frac{1+\frac{p+1}{p} \frac{t^2}{2}}{\frac{p+1}{2}}\right)^{(p+1)/2}} = \frac{1}{e^{t^2/2}} = e^{-t^2/2}
 \]
+Now for the part $\frac{\Gamma(\frac{p+1}{2})}{\Gamma(\pbt)}$, using Stirling's formula, we can write as,
+\begin{align*}
+\frac{\Gamma(\frac{p+1}{2})}{\Gamma(\pbt)} \frac{1}{\sqrt{p\pi}} &= \frac{(\frac{p+1}{2})!}{(\pbt)!}\frac{1}{\sqrt{p\pi}} \\
+& = \frac{(\frac{p+1}{2})^{\frac{p+1}{2}+\frac{1}{2}} e^{-\frac{p+1}{2}} \sqrt{2\pi}}{(\pbt)^{\pbt+\frac{1}{2}} e^{-\pbt} \sqrt{2\pi}} \frac{1}{p \pi} \\
+& = \frac{e^{-\frac{1}{2}}}{\sqrt{2 \pi}} \frac{(\frac{p+1}{2})^{\pbt + 1}}{(\pbt)^{\pbt+1}} \\
+& = \frac{e^{-\frac{1}{2}}}{\sqrt{2 \pi}} \frac{(p+1)^{\pbt + 1}}{p^{\pbt+1}}  = \frac{e^{-\frac{1}{2}}}{\sqrt{2 \pi}} \left(\frac{(p+1)}{p}\right)^{\pbt + 1} \\ 
+& = \frac{e^{-\frac{1}{2}}}{\sqrt{2 \pi}} \left(1+\frac{\frac{1}{2}}{\frac{p}{2}}\right)^{\pbt}(1+\frac{1}{p}) \\ 
+\\
+\lim_{p \to \infty} \frac{e^{-\frac{1}{2}}}{\sqrt{2 \pi}} \left(1+\frac{\frac{1}{2}}{\frac{p}{2}}\right)^{\pbt}(1+\frac{1}{p}) & = \frac{e^{-\frac{1}{2}} e^\frac{1}{2}}{\sqrt{2\pi}} = \frac{1}{\sqrt{2\pi}}
+\end{align*}
+So, 
+\[
+\lim_{p \to \infty} f(x|p) \to \frac{1}{\sqrt{2\pi}} e^{-x^2/2}
+\]
 \item
 Directly using the result of (c), since $X \convd N(0, 1)$ as $p \to \infty$, then $X^2 \convd \chi^2_1$.
+\item
+$\chi_q^2$.
 \end{enumerate}
 \end{document}
